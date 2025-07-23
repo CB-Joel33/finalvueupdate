@@ -897,7 +897,7 @@ body {
 
 }
 .searchbar{
-    width: 85%;
+    width: 80%;
     height: 10px;
     margin-top: 10px;
     border-radius: 10px;
