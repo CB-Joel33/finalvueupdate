@@ -1,6 +1,6 @@
 <template>
   <div class="mainbody">
-    <div class="grid grid-cols-2 h-screen overflow-hidden">
+    <div style="display: grid; grid-template-columns: 1fr 1fr ;">
       <div>
         <div style="margin-left: 20%;">
           <div class="heading">
@@ -46,19 +46,10 @@
         </div>
       </div>
       
-      <div >
-        <img src="@/assets/Rectangle 24148.png" alt="" class="toppurple">
-        <div >
-          <img src="@/assets/Rectangle 24147.png" alt="" class="middlepurple">
-          <img src="@/assets/logos_miro-icon.png" style="position: absolute; top: 20px; left: 1250px; z-index: 3;">
-          <img src="@/assets/Group.png" style="position: absolute; top: 127px; left: 1038px; z-index: 3;">
-          <img src="@/assets/skill-icons_visualstudio-dark.png" style="position: absolute; top: 160px; left: 1360px; z-index: 3;">
-          <img src="@/assets/vscode-icons_file-type-sketch.png" style="position: absolute; top: 220px; left: 1200px; z-index: 3;">
-          <img src="@/assets/logos_tableau-icon.png" style="position: absolute; top: 320px; left: 1038px; z-index: 3;">
-          <img src="@/assets/simple-icons_wireshark.png" style="position: absolute; top: 270px; left: 1380px; z-index: 3;">
-          <img src="@/assets/skill-icons_python-light.png" style="position: absolute; top: 360px; left: 1270px; z-index: 3;">
-        </div>
-        <img src="@/assets/Group 36304.png" alt="" class="bottompurple">
+      <div style="height: 100%;" >
+
+
+        <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;">
       </div>
     </div>
   </div>
@@ -169,7 +160,6 @@ body {
     margin-top: 19px;
     padding: 10px;
     padding-left: 30px;
-    opacity: 0.7;
     width: 95%;
     height: 25px;
     border: none;
@@ -215,3 +205,4 @@ body {
     margin-top: -430px;
 }
 </style>
+
