@@ -1,3 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap");
+
+@import "tailwindcss";
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.dropbtn {
+  border: none;
+  background-color: white;
+  outline: none;
+}
+.purplebutton {
+  border-radius: 7px;
+  background-color: #4d148c;
+  width: 200px;
+  height: 47px;
+  color: white;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.enrollbutton {
+  border-radius: 7px;
+  background-color: #4d148c;
+  width: 200px;
+  height: 47px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

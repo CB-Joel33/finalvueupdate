@@ -1,14 +1,29 @@
 <template>
   <div>
-  <router-view/>
+    
+    <Header v-if="!hideHeader" />
+    <router-view />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
+<script setup>
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import Header from './components/Header.vue'
 
-}
+
+const route = useRoute()
+
+
+const hiddenRoutes = [
+  '/login',
+  '/register',
+  '/otp-verification',
+  '/forgot-password'
+]
+
+
+const hideHeader = computed(() => hiddenRoutes.includes(route.path))
 </script>
 
 <style>

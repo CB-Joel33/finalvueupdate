@@ -1,11 +1,11 @@
 <template>
   <div class="mainbody">
     <div style="display: grid; grid-template-columns: 1fr 1fr ;">
-      <div>
-        <div style="margin-left: 20%;">
-          <div class="heading">
+      <div class="sm:mx-auto ">
+        <div style="margin-left: 20%;padding: 90px;" class=" " >
+          <div class="heading flex-col gap-4 md:flex md:flex-row" >
             <img src="@/assets/logo.png">
-            <div style="margin-top: 17px;">
+            <div style="margin-top: 0px;">
               <p>
                 Don't have an account?
                 <router-link to="/register" style="margin-left: 5px;">Sign Up</router-link>
@@ -31,11 +31,11 @@
                <p>Forgot Password? <router-link to="/forgot-password" target="_blank" style="">Click here </router-link></p>
               </div>
 
-              <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;">
+              <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;" class="flex-col gap-4 md:flex md:flex-row">
                 <button class="signbutton" type="submit" :disabled="loader">
                   {{ loader ? "Signing In..." : "Sign In" }}
                 </button>
-                <p>-Or-</p>
+                
                 <div style="width: 80px; justify-content: space-around; display: flex;">
                   <img src="@/assets/logos_facebook (1).png" alt="" class="logolink">
                   <img src="@/assets/flat-color-icons_google (1).png" alt="" class="logolink">
@@ -48,8 +48,7 @@
       
       <div style="height: 100%;" >
 
-
-        <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;">
+        <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;" class="hidden md:flex">
       </div>
     </div>
   </div>
@@ -110,21 +109,8 @@ router.push('/');
 
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap');
+<style scoped>
 
-*{
-    margin: 0;
-    padding: 0;
-    
-}
-
-h1 , h2, h3 , h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
-body {
-    font-family: 'Poppins', sans-serif;
-}
 .heading{
     display: flex;
     align-items: center;

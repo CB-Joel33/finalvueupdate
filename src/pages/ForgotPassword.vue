@@ -64,20 +64,7 @@
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    
-}
-
-h1 , h2, h3 , h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
-body {
-    font-family: 'Poppins', sans-serif;
-}
 .heading{
     display: flex;
    margin-top: 15%;
@@ -112,10 +99,9 @@ body {
     margin-top: 19px;
     padding: 10px;
     padding-left: 30px;
-    opacity: 0.7;
-    width: 95%;
+    width: 80%;
     height: 25px;
-    border: none;
+
     border-bottom: 1px solid black;
     outline: none;
 

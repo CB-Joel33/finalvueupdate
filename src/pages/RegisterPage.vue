@@ -2,10 +2,10 @@
   <div class="mainbody">
     <div style="display: grid; grid-template-columns: 0.5fr 0.5fr; height: 100vh; overflow: hidden;">
       <div>
-        <div style="margin-left: 20%;">
+        <div style="margin-left: 20%; padding: 90px;">
           <div class="heading">
             <img src="@/assets/logo.png" />
-            <div style="margin-top: 17px;">
+            <div style="">
               <p>
                 Already have an account?
                 <router-link to="/login" style="margin-left: 5px;">Sign in</router-link>
@@ -33,7 +33,7 @@
               <input type="password" placeholder="Re-enter Password" class="forms" v-model="registerForm.repassword" />
 
           
-              <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;">
+              <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;  " class="flex-col gap-4 md:flex md:flex-row">
              
                 <button type="submit" class="signbutton" :disabled="loader">
                   {{ loader ? "Signing Up..." : "Sign Up" }}
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-       <div style="height: 100%;" >
+       <div style="height: 100%;"  class="hidden md:flex">
 
 
         <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;">
@@ -116,21 +116,8 @@ async function sign_up() {
 </script>
 
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap');
+<style scoped>
 
-*{
-    margin: 0;
-    padding: 0;
-    
-}
-
-h1 , h2, h3 , h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
-body {
-    font-family: 'Poppins', sans-serif;
-}
 
 .signupbold{
 
@@ -150,7 +137,7 @@ body {
     margin-top: 19px;
     padding: 10px;
     padding-left: 30px;
-    
+    outline: none;
     width: 95%;
     height: 25px;
     border: none;

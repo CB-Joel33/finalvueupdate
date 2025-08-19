@@ -1,36 +1,15 @@
 <template>
   <div>
     <div >
-      <div style="width: 100%; height: 100px;position: fixed; top: 0; left: 0; z-index: 1000;background-color: white;">
-        <nav class="navbar">
-          <div>
-            <img src="@/assets/logo.png" />
-          </div>
-          <div style="display: flex; justify-content: space-around; align-items: center; gap: 25px;">
-           <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-           <Dropdown />
-            </div>
+    
 
-            <router-link to="" style="text-decoration:none;color: black" class="topnav">Reviews</router-link>
-            <router-link to="" style="text-decoration:none;color: black" class="topnav">Contact us</router-link>
-          </div>
-          <div>
-           <button class="purplebutton">
-          <span style="font-family: 'Poppins', sans-serif; font-weight: 600; ">Start Learning</span>
-          <img src="@/assets/send.png" alt="Send Icon" style="width: 13px; height: 13px; margin-left: 10px;" />
-           </button>
-
-          </div>
-        </nav>
-      </div>
-
-      <div class="seconddiv" style="display: grid; grid-template-columns: 50% 50%; margin-top: 120px;">
+      <div class="seconddiv " style="display: grid; grid-template-columns: 50% 50%; margin-top: 120px;" >
         <div style="width: 100%;">
           <div style="margin-left: 10%; margin-top: 20%;">
             <h2 style="font-weight: 900; font-size: 30px;">What do you want to learn?</h2>
-            <div style="position: relative;">
+            <div style="position: relative;background-color: white;width: 80%; border-radius: 10px;padding: auto; overflow: hidden;">
               <input type="text" placeholder="Search for courses" class="searchbar" />
-              <img src="@/assets/lets-icons_search-duotone.png" style="position: absolute; left: 439px; top: 18px;" />
+              <img src="@/assets/lets-icons_search-duotone.png" style="position: absolute; left: 410px; top: 18px;" />
             </div>
            <div style="font-size: 14px; display: flex; align-items: center; margin-top: 7px; gap: 7px;">
   <p style="color: #F26100; margin: 0;">Suggestion:</p>
@@ -41,8 +20,8 @@
           </div>
         </div>
 
-        <div>
-          <img src="@/assets/Frame 576.png" style="margin-top: 25px; display: flex;" />
+        <div> 
+          <img src="@/assets/Frame 576.png" style="margin-top: 25px; display: flex;" class="hidden md:flex" />
         </div>
       </div>
 
@@ -51,7 +30,7 @@
       </div>
    
     </div>
-<div style="margin-top: 35px; width: 100%; display: flex; justify-content: center;">
+<div style="margin-top: 65px; width: 100%; display: flex; justify-content: center;">
   <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; width: 85%;">
     <img src="@/assets/image 22.png" />
     <img src="@/assets/image 24.png" />
@@ -93,8 +72,8 @@
   <button class="buttonfilter"><p>Data</p></button>
   <button class="buttonfilter"><p>Product Design</p></button>
   <button class="buttonfilter"><p>Cybersecurity</p></button>
-  <button class="buttonfilter"><p> Content Writing</p></button>
-  <button class="buttonfilter"><p> Tech Marketing</p></button>
+  <button class="buttonfilter"><p> Project Management</p></button>
+  <button class="buttonfilter"><p> Software Development</p></button>
   
    
 
@@ -102,563 +81,51 @@
 </div>
 
 
-<div style="width: 80%; margin-left: 155px; margin-top: 20px;">
-  <div style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr; gap: 5px;">
-    <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Data Analysis with Excel and PowerBi</p>
+  <div style="width: 80%; margin-left: 155px; margin-top: 20px;">
+    <div v-if="courses.length" style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr; gap: 5px;">
+      <div v-for="course in courses" :key="course._id" class="coursecards">
+        <div style="flex: 1;">
+          <img :src="course.imageUrl" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
         </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-         <router-link to="/course/DataAnalysiswithPowerbi" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
+        <div style="flex: 1;">
+          <div style="margin-left: 10px">
+            <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
+              <p style="margin: 0;margin-top: 6px">{{ course.title }}</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+              <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
+              <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
+            </div>
+            <div style="margin-top: 15px;">
+              <div style="font-size: 13px;">Mode: On-Site/Remote</div>
+              <div style="font-size: 13px;">Duration: {{ course.duration }}</div>
+              <div style="font-size: 13px;">Payment Type: Full/Installment</div>
+              <p style="font-weight: bold; font-size: 14px;">{{ formatPrice(course.price) }}</p>
+            </div>
+            <div style="display: flex; align-items: center; margin-top: 20px;">
+              <router-link :to="`/allCourses/${course._id}`" class="viewbutton">
+                <p>Preview Course</p>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">  Data Analytics with SQL and PowerBi</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/DataAnalyticsSQL" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">   Data Analytics with Excel and Python</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-        <router-link to="/course/DataAnalyticswithExcel" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Data Science with SQL and Python</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/DataScienceSQL" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px"> Data Science with Python and Machine Learning</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/DataSciencePython" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px"> Advance Machine learning</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/MachineLearning" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Product Design Foundations</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/ProductDesign" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Intermediate Product Design</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/ProductDesigninter" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Advanced Product Design</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/ProductDesignAdv" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Project Management Methodology</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/PMMethodology" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Project Management Full course</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-         <router-link to="/course/ProjectManagement" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Fundamentals of Cybersecurity</p>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/cybersecurity" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Ethical Hacking in Cybersecurity</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/EthicalHacking" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Defensive Hacking in Cybersecurity</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/DefenseHacking" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Front End development</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/frontend" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Back End development </p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-         <router-link to="/course/backend" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-     <div class="coursecards">
-      <div style="flex: 1;">
-        <img src="@/assets/Rectangle 24138.png" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
-      </div>
-
-      <div style="flex: 1;">
-        <div style="margin-left: 10px">
-        <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-          <p style="margin: 0;margin-top: 6px">Full stack development</p>
-        </div>
-
-        <div style=" display: flex; align-items: center; gap: 5px;">
-          <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-          <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Mode:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Duration:</div>
-          <div style="font-size: 13px; font-family: 'Poppins', sans-serif;">Payment Type:</div>
-          <p style="font-weight: bold; font-size: 14px;">₦500,000</p>
-        </div>
-
-        <div style="display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-top: 10px;">
-          <router-link to="/course/fullstack" class="viewbutton">
-         View Curriculum
-         </router-link>
-          <button class="enrollbutton">Enroll Now</button>
-        </div>
-        </div>
-      </div>
-    </div>
-    
-    
-
-
+    <Pagination
+      :current-page="page"
+      :total-pages="totalPages"
+      :has-previous-page="page > 1"
+      :has-next-page="page < totalPages"
+      :loading="loading"
+      @page-change="handlePageChange"
+    />
   </div>
-</div>
 
     
        
-    
+      
   
 
   </section>
@@ -715,8 +182,8 @@
         </div>
       </div>
 
-     
-      <div class="reviewcards" style="height: 310px; margin-top: -20px">
+      
+      <div class="reviewcards shadow-lg" style="height: 310px; margin-top: -20px" >
         <div class="card-content">
           <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
 
@@ -833,59 +300,59 @@
 
 <script setup>
 import Dropdown from '@/components/Dropdown.vue'
+import AboutDropdown from '@/components/aboutDropdown.vue'
+
+
+import { ref } from 'vue';
+import { onMounted} from 'vue';
+import axios from 'axios';
+import Pagination from '@/components/Pagination.vue';
+
+const loading = ref(false)
+
+const courses = ref([]);
+const page = ref(1);
+const totalPages = ref(0);
+
+
+async function fetchCourses() {
+  loading.value = true;
+  
+
+  try {
+    const response = await axios.get(`https://zacraclearningwebsite.onrender.com/courses?page=${page}&limit=9`);
+    courses.value = response.data.Data;
+    totalPages.value = response.data.totalPages;
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+  }finally {
+    loading.value = false
+  }
+};
+
+
+function formatPrice(price){
+  return price.toLocaleString('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+  });   
+}
+
+function handlePageChange(newPage) {
+  page.value = newPage
+  fetchCourses()
+}
+
+onMounted(() => {
+  fetchCourses()
+})
+
+
 </script>
 
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap');
+<style scoped>
 
-*{
-    padding: 0;
-    margin: 0;
-   box-sizing: border-box;
-
-    
-}
-h1 , h2, h3 , h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
-body {
-    font-family: 'Poppins', sans-serif;
-}
-.navbar{
-
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-    display: flex;
-    margin-top: 36px;
-    z-index: 100;
-    position: absolute;
-}
-.topnav:hover{
- border-bottom: 3px solid #4D148C;
- margin-top: 5px
-}
-.dropbtn{
-    border: none;
-    background-color: white;
-    outline: none;
-
-}
-.purplebutton{
-    border-radius: 7px;
-    background-color: #4D148C;
-    width: 200px;
-    height: 47px;
-    color: white;
-    font-weight: 500;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
-
-}
 .seconddiv{
 
     width: 82%;
@@ -927,30 +394,21 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .viewbutton{
    text-align: center;
    height: 40px;
-   width: 150px;
-   padding: 5px;
-   opacity: 0.6;
-   border-radius: 5px;
-   background-color: white;
-   text-decoration: none;
-   border: 1px solid black ;
-   color: black;
-}
-.enrollbutton{
-  text-align: center;
-   text-align: center;
-   height: 40px;
-   width: 150px;
+   width: 90%;
    padding: 5px;
    border-radius: 5px;
    background-color: #4D148C;
-   color: white;
-   border: none;
+   text-decoration: none;
+   border: 1px solid black ;
+    color: white;
+    
 }
+
 .reviewcards {
   height: 265px;
   width: 400px;
@@ -968,5 +426,10 @@ body {
   flex-direction: column;
   align-items: center;
   width: 90%;
+}
+.pagebuttons{
+  width: 40px;
+  height: 40px;
+  
 }
 </style>

@@ -44,7 +44,7 @@
       </div>
 
       </div>
-       <div style="height: 100%;" >
+       <div style="height: 100%;" class="hidden md:flex" >
 
 
         <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;">
@@ -130,20 +130,7 @@ if(!email){
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@400;600;700&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    
-}
-
-h1 , h2, h3 , h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-}
-body {
-    font-family: 'Poppins', sans-serif;
-}
 .heading{
     display: flex;
     justify-content: flex-start;  

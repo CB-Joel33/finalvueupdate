@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative;" @mouseleave="isOpen = false">
     <div @click="toggleDropdown" style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
-      <p style="margin: 0; font-size: 14px;" class="topnav">Courses ▾</p>
+      <p style="margin: 0; font-size: 14px;" class="topnav">About ▾</p>
     </div>
 
       <div
@@ -21,7 +21,7 @@
     >
       <ul style="list-style: none; margin: 0; padding: 0;">
         <li
-          v-for="(item, index) in courses"
+          v-for="(item, index) in about"
           :key="index"
           style="
             padding: 14px 24px;
@@ -50,11 +50,9 @@ function toggleDropdown() {
   isOpen.value = !isOpen.value
 }
 
-const courses = [
+const about = [
   
-  'Data',
-  'Web development',
-  'Product Design',
-  'Cyber Security',
+  'About Zacrac',
+  'About Us'
 ]
 </script>
