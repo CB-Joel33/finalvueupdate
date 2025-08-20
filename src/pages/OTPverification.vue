@@ -1,4 +1,21 @@
 <template>
+   <div>
+    
+    <div
+      v-if="loading"
+      class="flex flex-col items-center justify-center h-screen bg-white"
+    >
+      
+      <img
+        src="@/assets/icons8-loader-80.png"
+        class="h-24 w-24 object-contain animate-spin"
+      />
+
+      
+      <p class="mt-4 text-lg font-semibold text-gray-700">Loading...</p>
+    </div>
+
+    <div v-else>
   <div class="mainbody">
 
      <div style="display: grid;grid-template-columns: 0.5fr 0.5fr; height: 100vh;overflow: hidden;">
@@ -51,6 +68,9 @@
       </div>
    </div>
   </div>
+  </div>
+  </div>
+
 </template>
 
 <script setup>
@@ -63,6 +83,7 @@ import {ref, onMounted} from 'vue'
 const otp = ref(["","","","","",""])
 
 const otpRefs= ref({})
+const loading = ref(true)
 
 const handleInput = (event,index) => {
   const value = event.target.value
@@ -84,6 +105,7 @@ onMounted(() => {
     otpRefs.value[0].focus()
 
   }
+    loading.value = false
 }
 )
 

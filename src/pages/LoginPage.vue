@@ -1,4 +1,22 @@
 <template>
+
+  <div>
+    
+    <div
+      v-if="loading"
+      class="flex flex-col items-center justify-center h-screen bg-white"
+    >
+      
+      <img
+        src="@/assets/icons8-loader-80.png"
+        class="h-24 w-24 object-contain animate-spin"
+      />
+
+      
+      <p class="mt-4 text-lg font-semibold text-gray-700">Loading...</p>
+    </div>
+
+    <div v-else>
   <div class="mainbody">
     <div style="display: grid; grid-template-columns: 1fr 1fr ;">
       <div class="sm:mx-auto ">
@@ -52,65 +70,66 @@
       </div>
     </div>
   </div>
+  </div>
+  </div>
 </template>
 
 
 <script setup>
-import {ref} from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
-
-const loader = ref(false)
+const loader = ref(false) // for Sign In button
+const loading = ref(true) // for fullscreen loader
 const router = useRouter()
 const errormsg = ref("")
 
-const loginForm = ref ({
-    email: "",
-    password: "",
-
+const loginForm = ref({
+  email: "",
+  password: "",
 })
 
+// Simulate initial page load
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 1000) // 1 second loader, adjust as needed
+})
 
+async function sign_in() {
+  errormsg.value = ""
+  loader.value = true
 
+  try {
+    const response = await axios.post(
+      "https://zacraclearningwebsite.onrender.com/api/v1/user/signin",
+      {
+        email: loginForm.value.email,
+        password: loginForm.value.password,
+      }
+    )
 
-async function sign_in(){
-    errormsg.value=""
-    loader.value = true
-   
-   
-   try {
-    const response = await axios.post("https://zacraclearningwebsite.onrender.com/api/v1/user/signin" , {
-        email: loginForm.value.email ,
-        password: loginForm.value.password
-    })
+    const token = response.data.token
+    localStorage.setItem("token", token)
+    localStorage.setItem("loginTime", Date.now())
+    router.push("/")
+  } catch (error) {
+    const message = error.response?.data?.message?.toLowerCase()
 
- const token = response.data.token;
-localStorage.setItem('token', token);
-localStorage.setItem('loginTime', Date.now());
-router.push('/');
-   } catch(error)
-
-   {
- const message = error.response?.data?.message?.toLowerCase()
-
- if(message?.includes("password")){
-    errormsg.value= "Wrong Password"
- }
- else if (message?.includes("email")){
-    errormsg.value= "No Account Exist For This Email"
- } else{
-    errormsg.value = "An error has occured. Please try Again"
- } }
- finally{
+    if (message?.includes("password")) {
+      errormsg.value = "Wrong Password"
+    } else if (message?.includes("email")) {
+      errormsg.value = "No Account Exist For This Email"
+    } else {
+      errormsg.value = "An error has occured. Please try Again"
+    }
+  } finally {
     loader.value = false
- 
-
-   }
-   }
-
-
+  }
+}
 </script>
+
 
 <style scoped>
 

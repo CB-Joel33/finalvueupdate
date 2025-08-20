@@ -1,4 +1,22 @@
 <template>
+
+   <div>
+    
+    <div
+      v-if="loading"
+      class="flex flex-col items-center justify-center h-screen bg-white"
+    >
+      
+      <img
+        src="@/assets/icons8-loader-80.png"
+        class="h-24 w-24 object-contain animate-spin"
+      />
+
+      
+      <p class="mt-4 text-lg font-semibold text-gray-700">Loading...</p>
+    </div>
+
+    <div v-else>
   <div class="mainbody">
     <div style="display: grid; grid-template-columns: 0.5fr 0.5fr; height: 100vh; overflow: hidden;">
       <div>
@@ -58,22 +76,31 @@
       </div>
     </div>
   </div>
+   </div>
+    </div>
+
 </template>
 
 <script setup>
 import { ref } from "vue"
 import axios from "axios"
 import { useRouter } from "vue-router"
+import { onMounted } from "vue"
 
 const router = useRouter()
 const loader = ref(false)
 const errormsg = ref("")
+const loading = ref(true)
 
 const registerForm = ref({
   full_name: "",
   email: "",
   password: "",
   repassword: "",
+})
+onMounted(() => {
+  
+  loading.value = false
 })
 
 async function sign_up() {
@@ -111,6 +138,7 @@ async function sign_up() {
 
   } finally {
     loader.value = false
+  
   }
 }
 </script>
