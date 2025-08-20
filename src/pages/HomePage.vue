@@ -3,9 +3,9 @@
     <div >
     
 
-      <div class="seconddiv " style="display: grid; grid-template-columns: 50% 50%; margin-top: 120px;" >
+      <div class="seconddiv grid grid-cols-1 md:grid-cols-2 " style="margin-top: 150px;">
         <div style="width: 100%;">
-          <div style="margin-left: 10%; margin-top: 20%;">
+          <div style="margin-left: 10%; margin-top: 20%;" class="flex flex-col justify-center">
             <h2 style="font-weight: 900; font-size: 30px;">What do you want to learn?</h2>
             <div style="position: relative;background-color: white;width: 80%; border-radius: 10px;padding: auto; overflow: hidden;">
               <input type="text" placeholder="Search for courses" class="searchbar" />
@@ -20,8 +20,8 @@
           </div>
         </div>
 
-        <div> 
-          <img src="@/assets/Frame 576.png" style="margin-top: 25px; display: flex;" class="hidden md:flex" />
+        <div class="md:flex flex-col items-center md:items-end hidden"> 
+          <img src="@/assets/Frame 576.png" style="margin-top: 25px; display: flex;"  />
         </div>
       </div>
 
@@ -31,7 +31,7 @@
    
     </div>
 <div style="margin-top: 65px; width: 100%; display: flex; justify-content: center;">
-  <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; width: 85%;">
+  <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; width: 85%;" class="animate-scroll">
     <img src="@/assets/image 22.png" />
     <img src="@/assets/image 24.png" />
     <img src="@/assets/image 76.png" />
@@ -40,6 +40,7 @@
     <img src="@/assets/image 25.png" />
     <img src="@/assets/image-removebg-preview (14) 1.png" />
      <img src="@/assets/image 30.png" />
+
     
   </div>
 
@@ -66,7 +67,7 @@
 </div>
 
 <div style=" width:80%;margin-left: 155px;margin-top: 20px">
-<div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:20px">
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:20px" class="sm:hidden md:flex">
 
   <button class="buttonfilter"><p>All</p></button>
   <button class="buttonfilter"><p>Data</p></button>
@@ -352,6 +353,20 @@ onMounted(() => {
 
 
 <style scoped>
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
 
 .seconddiv{
 

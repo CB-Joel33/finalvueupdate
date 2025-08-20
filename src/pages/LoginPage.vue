@@ -32,13 +32,13 @@
               </div>
 
               <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;" class="flex-col gap-4 md:flex md:flex-row">
-                <button class="signbutton" type="submit" :disabled="loader">
+                <button class="signbutton cursor-pointer" type="submit" :disabled="loader">
                   {{ loader ? "Signing In..." : "Sign In" }}
                 </button>
                 
                 <div style="width: 80px; justify-content: space-around; display: flex;">
-                  <img src="@/assets/logos_facebook (1).png" alt="" class="logolink">
-                  <img src="@/assets/flat-color-icons_google (1).png" alt="" class="logolink">
+                  <button class="cursor-pointer" ><img src="@/assets/logos_facebook (1).png" alt="" class="logolink"></button>
+                  <button class="cursor-pointer"><img src="@/assets/flat-color-icons_google (1).png" alt="" class="logolink"></button>
                 </div>
               </div>
             </form>
@@ -60,6 +60,7 @@ import {ref} from 'vue'
 import axios from 'axios'
 import {useRouter} from 'vue-router'
 
+
 const loader = ref(false)
 const router = useRouter()
 const errormsg = ref("")
@@ -69,6 +70,8 @@ const loginForm = ref ({
     password: "",
 
 })
+
+
 
 
 async function sign_in(){

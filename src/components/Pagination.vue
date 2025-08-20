@@ -22,7 +22,7 @@
           >
             {{ page }}
           </button>
-          <span v-else class="px-2 text-gray-400 select-none">{{ page }}</span>
+          <span v-else class="px-2 text-black select-none">{{ page }}</span>
         </template>
       </div>
 
@@ -99,14 +99,14 @@ defineEmits<{
   display: flex;
   justify-content: center;
   font-size: 14px;
-  color: #b0b0b0;
+  color: black;
   align-items: center;
-  border: 1px solid #b0b0b0;
+  border: 1px solid black;
 }
 
 .pagination-button:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .pagination-button:not(:disabled):hover {
