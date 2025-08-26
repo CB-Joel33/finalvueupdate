@@ -26,7 +26,7 @@
             <div style="">
               <p>
                 Already have an account?
-                <router-link to="/login" style="margin-left: 5px;">Sign in</router-link>
+                <router-link to="/login" style="margin-left: 5px;color: blueviolet;">Sign in</router-link>
               </p>
             </div>
           </div>
@@ -34,7 +34,9 @@
      
           <p style="color: red; font-weight: bold; text-align: center; font-size: 27px">{{ errormsg }}</p>
 
-          <p class="signupbold">Sign Up</p>
+          <p class="signupbold">
+          Sign Up
+        </p>
 
           <div class="inputwrapper">
             <form @submit.prevent="sign_up">
@@ -57,12 +59,11 @@
                   {{ loader ? "Signing Up..." : "Sign Up" }}
                 </button>
 
-                <p>-Or-</p>
+             
 
-                <div style="width: 80px; justify-content: space-around; display: flex;">
-                  <a href=""><img src="@/assets/logos_facebook (1).png" alt="" class="logolink" /></a>
-                  <a href=""><img src="@/assets/flat-color-icons_google (1).png" alt="" class="logolink" /></a>
-                </div>
+                <div class="flex justify-center sm:justify-around items-center w-full sm:w-[80px]">
+  <GoogleLogin :callback="handleGoogleLogin"/>
+</div>
               </div>
             </form>
           </div>
@@ -86,6 +87,7 @@ import { ref } from "vue"
 import axios from "axios"
 import { useRouter } from "vue-router"
 import { onMounted } from "vue"
+import { googleTokenLogin } from "vue3-google-login"
 
 const router = useRouter()
 const loader = ref(false)
@@ -141,6 +143,36 @@ async function sign_up() {
   
   }
 }
+
+const handleGoogleLogin = async (response) => {
+  try {
+    const googleToken = response.credential;
+
+    const res = await axios.post(
+  "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google-login",
+  { token: googleToken }
+);
+
+    console.log("Google login success:", res.data);
+
+    const token = res.data.token;
+    localStorage.setItem("token", token);
+    localStorage.setItem("loginTime", Date.now());
+
+    router.push("/");
+  } catch (error) {
+    const backendMessage = error.response?.data?.message || "";
+
+    if (backendMessage.includes("already registered with another provider")) {
+      errormsg.value =
+        "This email is already registered with password login. Please sign in normally or reset your password.";
+    } else {
+      errormsg.value = backendMessage || "Google login failed. Please try again.";
+    }
+
+    console.error("Google login failed:", error.response?.data || error);
+  }
+};
 </script>
 
 

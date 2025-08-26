@@ -67,23 +67,23 @@
 </div>
 
 <div style=" width:80%;margin-left: 155px;margin-top: 20px">
-<div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:20px" class="sm:hidden md:flex">
+<div ref="filterSection" style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:20px" class="sm:hidden md:flex">
 
-  <button class="buttonfilter"><p>All</p></button>
-  <button class="buttonfilter"><p>Data</p></button>
-  <button class="buttonfilter"><p>Product Design</p></button>
-  <button class="buttonfilter"><p>Cybersecurity</p></button>
-  <button class="buttonfilter"><p> Project Management</p></button>
-  <button class="buttonfilter"><p> Software Development</p></button>
-  
+  <button class="buttonfilter" @click="setDepartment('All')"><p>All</p></button>
+  <button class="buttonfilter" @click="setDepartment('Data')"><p>Data</p></button>
+  <button class="buttonfilter" @click="setDepartment('Product Design')"><p>Product Design</p></button>
+  <button class="buttonfilter" @click="setDepartment('Cybersecurity')"><p>Cybersecurity</p></button>
+  <button class="buttonfilter" @click="setDepartment('Project Management')"><p> Project Management</p></button>
+  <button class="buttonfilter" @click="setDepartment('Software Development')"><p> Software Development</p></button>
+
    
 
 </div>
 </div>
 
 
-  <div style="width: 80%; margin-left: 155px; margin-top: 20px;">
-    <div v-if="courses.length" style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr; gap: 5px;">
+  <div style="width: 80%; margin-left: 155px; margin-top: 20px;"  ref="coursesSection">
+    <div v-if="courses && courses.length" style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr; gap: 5px;">
       <div v-for="course in courses" :key="course._id" class="coursecards">
         <div style="flex: 1;">
           <img :src="course.imageUrl" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
@@ -95,7 +95,7 @@
             </div>
             <div style="display: flex; align-items: center; gap: 5px;">
               <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-              <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">80 people enrolled</h6>
+              <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">{{ course.numberOfEnrolled }} people enrolled</h6>
             </div>
             <div style="margin-top: 15px;">
               <div style="font-size: 13px;">Mode: On-Site/Remote</div>
@@ -135,8 +135,8 @@
   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
     <img src="@/assets/Label.png" alt="" style="margin-bottom: 10px;" />
     <h6 style="margin: 10px 0; max-width: 600px;font-weight: bold">Have you already learned a Tech Skill and want to hone your skills by working on Projects with a Mentor?</h6>
-   <button style="padding: 10px 20px; margin-top: 30px; border-radius: 10px; display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 500;">
-  <span>Explore Project Build & Mentorship Program</span>
+   <button style="padding: 10px 20px; margin-top: 30px; border-radius: 10px; display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 500; border: 1px solid black; ">
+  <span >Explore Project Build & Mentorship Program</span>
   <img src="@/assets/send2.png" alt="Send Icon" style="width: 13px; height: 13px;" />
 </button>
 
@@ -302,45 +302,66 @@
 <script setup>
 import Dropdown from '@/components/Dropdown.vue'
 import AboutDropdown from '@/components/aboutDropdown.vue'
-
-
-import { ref } from 'vue';
-import { onMounted} from 'vue';
-import axios from 'axios';
-import Pagination from '@/components/Pagination.vue';
+import { ref, onMounted,  watch } from 'vue'
+import axios from 'axios'
+import Pagination from '@/components/Pagination.vue'
+import { useRoute } from "vue-router"
+import { nextTick } from "vue"
 
 const loading = ref(false)
 
-const courses = ref([]);
-const page = ref(1);
-const totalPages = ref(0);
 
+const courses = ref([])
+const page = ref(1)
+const totalPages = ref(0)
+const selectedDepartment = ref('All')  
+const filterSection = ref(null)
+const coursesSection = ref(null)
+
+
+const route = useRoute()
 
 async function fetchCourses() {
-  loading.value = true;
-  
-
+  loading.value = true
   try {
-    const response = await axios.get(`https://zacraclearningwebsite.onrender.com/courses?page=${page}&limit=9`);
-    courses.value = response.data.Data;
-    totalPages.value = response.data.totalPages;
-  } catch (error) {
-    console.error('Error fetching courses:', error);
-  }finally {
+   
+    let url = `https://zacraclearningwebsite.onrender.com/courses?page=${page.value}&limit=9`
+
+ 
+    if (selectedDepartment.value !== 'All') {
+      url += `&department=${encodeURIComponent(selectedDepartment.value)}`
+    }
+
+   
+    const response = await axios.get(url)
+
+    courses.value = response.data.listOfCourses
+    totalPages.value = response.data.pagination.totalPages
+  }
+   catch (error) {
+    console.error('Error fetching courses:', error)
+
+  } finally {
     loading.value = false
   }
-};
+}
 
-
-function formatPrice(price){
+function formatPrice(price) {
   return price.toLocaleString('en-NG', {
     style: 'currency',
     currency: 'NGN',
-  });   
+  })
 }
 
 function handlePageChange(newPage) {
   page.value = newPage
+  fetchCourses()
+}
+
+function setDepartment(dept) {
+  selectedDepartment.value = dept
+  page.value = 1
+   console.log("Selected:", dept)
   fetchCourses()
 }
 
@@ -349,7 +370,31 @@ onMounted(() => {
 })
 
 
+
+async function scrollAndFilter(dept) {
+  setDepartment(dept)
+
+  await nextTick()
+
+
+  filterSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
+
+
+  setTimeout(() => {
+    coursesSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, 200) 
+}
+
+watch(() => route.query.dept, (newDept) => {
+  if (newDept) scrollAndFilter(newDept)
+})
+
+
+watch(() => route.query.dept, (newDept) => {
+  if (newDept) scrollAndFilter(newDept)
+})
 </script>
+
 
 
 <style scoped>

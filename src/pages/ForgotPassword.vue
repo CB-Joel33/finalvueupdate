@@ -1,147 +1,102 @@
 <template>
   <div class="mainbody">
-    <div class="grid grid-cols-2 h-screen overflow-hidden">
+    <div class="grid grid-cols-2 h-screen overflow-hidden ">
       <div>
-        <div style="margin-left: 20%;">
-          <div class="heading">
-            <img src="@/assets/logo.png">
-          
-          </div>
+        <div class="ml-[30%] p-[20px] mt-[150px]">
+          <img src="@/assets/logo.png" class="mb-6" />
 
-          <div v-if="errormsg" style="color:red; margin: 10px">
+          
+          <div v-if="errormsg" class="text-red-500 my-2">
             {{ errormsg }}
           </div>
 
-          <p class="signupbold">Enter Your Email to Reset Your Password</p>
+          
+          <div v-if="successmsg" class="text-green-600 my-2">
+            {{ successmsg }}
+          </div>
 
-          <div class="inputwrapper">
-            <form @submit.prevent="sign_in">
-              <img src="@/assets/et_profile-male (1).png" class="icons" style="top: 15px;">
-              <input type="email" placeholder="Email Address" class="forms" >  
+          <p class="signupbold mb-8">Enter Your Email to Reset Your Password</p>
 
-            
+          <div class="inputwrapper ">
+            <form @submit.prevent="handleForgot">
+              <input
+                type="email"
+                v-model="email"
+                placeholder="Email Address"
+                class="forms"
+                required
+              />
 
-               <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;">
+              <div class="mt-6 flex justify-between items-center">
                 <button class="signbutton" type="submit" :disabled="loader">
-                  <p>Submit</p>
+                  <span v-if="!loader">Submit</span>
+                  <span v-else>Sending...</span>
                 </button>
-               
               </div>
             </form>
           </div>
         </div>
       </div>
+
       
-      <div >
-        <img src="@/assets/Rectangle 24148.png" alt="" class="toppurple">
-        <div >
-          <img src="@/assets/Rectangle 24147.png" alt="" class="middlepurple">
-          <img src="@/assets/logos_miro-icon.png" style="position: absolute; top: 20px; left: 1250px; z-index: 3;">
-          <img src="@/assets/Group.png" style="position: absolute; top: 127px; left: 1038px; z-index: 3;">
-          <img src="@/assets/skill-icons_visualstudio-dark.png" style="position: absolute; top: 160px; left: 1360px; z-index: 3;">
-          <img src="@/assets/vscode-icons_file-type-sketch.png" style="position: absolute; top: 220px; left: 1200px; z-index: 3;">
-          <img src="@/assets/logos_tableau-icon.png" style="position: absolute; top: 320px; left: 1038px; z-index: 3;">
-          <img src="@/assets/simple-icons_wireshark.png" style="position: absolute; top: 270px; left: 1380px; z-index: 3;">
-          <img src="@/assets/skill-icons_python-light.png" style="position: absolute; top: 360px; left: 1270px; z-index: 3;">
-        </div>
-        <img src="@/assets/Group 36304.png" alt="" class="bottompurple">
+      <div>
+        <img
+          src="@/assets/Group 36307.png"
+          class="hidden md:flex absolute top-0 right-0 h-screen w-2/5"
+        >
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
-// import { ref } from 'vue'
+import { ref } from "vue"
+import axios from "axios"
 
-// const email = ref('')
-// const message = ref('')
+const email = ref("")
+const loader = ref(false)
+const errormsg = ref("")
+const successmsg = ref("")
 
-// function submitEmail() {
+const handleForgot = async () => {
+  loader.value = true
+  errormsg.value = ""
+  successmsg.value = ""
 
-//   message.value = `Reset link sent to: ${email.value}`
-// }
+  try {
+    const res = await axios.post(
+      "https://zacraclearningwebsite.onrender.com/api/v1/user/forget-password",
+      { email: email.value }
+    )
+
+    successmsg.value = res.data.message || "Reset link sent! Please check your email."
+  } catch (err) {
+    errormsg.value = err.response?.data?.message || "Something went wrong."
+  } finally {
+    loader.value = false
+  }
+}
 </script>
 
 <style scoped>
-
-.heading{
-    display: flex;
-   margin-top: 15%;
-   justify-content: left;
-   
-   
-}
-.signupbold{
-
-    font-weight: bolder;
-    margin-top: 100px;
-    font-size: 26px;
-    
-}
-.inputwrapper{
- position: relative;
- gap: 20px;
- flex-direction: column;
- display: flex;
-
-}
-.icons{
-    position: absolute;
-    width: 19px;
-    height: 19px;
-    left: 2px;
-    
-
-}
-
-.forms{
-    margin-top: 19px;
-    padding: 10px;
-    padding-left: 30px;
-    width: 80%;
-    height: 25px;
-
-    border-bottom: 1px solid black;
-    outline: none;
-
-
-}
 .signbutton{
-    width: 230px;
-    height: 45px;
-    border-radius: 50px;
     background-color: #4D148C;
     color: white;
-    font-size: 15px;
-   
-}
-.logolink{
-    height: 25px;
-    width: 25px;
-}
-.toppurple{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 200px;
 
-    position: relative;
-    margin-left: 120px;
-    z-index: 2;
 }
-.middlepurple{
-    position: relative;
-    margin-left: 130px;
-    height: 100vh;
-    width: 626px;
-    margin-top: -93px;
-    z-index: 1;
+.forms{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-.bottompurple{
 
-    position: relative;
-    margin-left: 64px;
-    z-index: 4;
-    height: auto;
-    width: 692px;
-    height: 450px;
-    margin-top: -430px;
-}
 </style>

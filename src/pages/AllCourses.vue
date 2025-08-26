@@ -4,7 +4,7 @@
 
  v-for="(course) in courses"
 :key="course._id"
-:to="{ name : AllCourses, params: { id: course._id }}"
+:to="{ name: 'CourseDetail', params: { id: course._id } }"
 >
     
 </router-link>
@@ -21,6 +21,8 @@ export default{
 
 const courses = ref([]);
 const route = useRoute();
+
+
 
 onMounted(async () => {
 

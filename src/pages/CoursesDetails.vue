@@ -41,15 +41,15 @@
                 <div class="bg-white rounded-full py-1 font-semibold flex items-center gap-2 px-6">
                   <img
                     src="@/assets/material-symbols--timer-outline-rounded.svg"
-                    class="h-[30px] w-[30px]"
+                    class="h-[30px] w-[33px]"
                   />
-                  <p class="flex-wrap w-[65px]">{{ course.duration }}</p>
+                  <p class="flex-wrap w-[70px]">{{ course.duration }}</p>
                 </div>
               </div>
             <div class="mt-5 flex items-center gap-6 bg-white p-3 rounded flex-col md:flex-row flex-wrap">
     
   
-    <div class="flex items-center gap-2 ">
+    <div class="flex items-center gap-1 ">
       <img src="@/assets/icons8-signal-16.png" alt="" class="w-5 h-5 object-contain">
       <p>Beginner and Intermediate</p>
     </div>
@@ -57,7 +57,7 @@
     <p>&</p>
 
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1">
       <img src="@/assets/icons8-signal-25.png" alt="" class="w-5 h-5 object-contain">
       <p>Experienced</p>
     </div>
@@ -65,7 +65,7 @@
 
     <div class="flex items-center gap-2">
       <img src="@/assets/icons8-play-50.png" alt="" class="w-5 h-5 object-contain">
-      <p>{{ course.curriculum.length }} Modules</p>
+      <p>{{ course?.curriculum?.length || 0 }} Modules</p>
     </div>
 
   </div>
@@ -131,6 +131,8 @@
         @click="scrollToSection('instructors')"
       >
         Course Instructors
+
+        
       </button>
 
       <button
@@ -154,7 +156,7 @@
         :class="nav === 'costs' ? 'border-2 border-purple-600 bg-white' : ''"
         @click="scrollToSection('costs')"
       >
-        Cost & Payment Plans
+      Cost & Payment Plan
       </button>
     </div>
   </section>
@@ -185,9 +187,17 @@
 
         </div >
 
-        <div id="instructors" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
+        <div id="instructors" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px] shadow-md" >
 
           <h1 class="font-[800] text-[30px]">Meet Your Instructors</h1>
+
+          <div class="border border-black-1 w-1/4 h-[370px] rounded-[15px] mt-[20px] p-[15px] ">
+
+          <div class="w-20 h-20 rounded-full border border-black overflow-hidden flex items-center justify-center">
+           <img src="@/assets/icons8-user-50.png" alt="" class="w-full h-full object-cover">
+          </div>
+
+        </div>
         </div>
 
         <div  id="jobs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
@@ -204,10 +214,160 @@
   </div>
 </div>
         </div>
-        <div  id="reviews" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
-          <h1 class="font-[800] text-[30px]">Reviews</h1>
 
+        <div
+        id="reviews"
+        class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]"
+      >
+        <h1 class="font-[800] text-[30px]">Reviews</h1>
+
+        <div class="border border-black rounded-[15px] p-[10px] mt-[15px]">
+       
+        <div class="flex items-end gap-2 mt-[20px]">
+          <textarea
+            v-model="newReview.comment"
+            placeholder="Write a review"
+            class="w-full  outline-none italic p-[10px] resize-none"
+            rows="4"
+          ></textarea>
+
+          <div class="flex flex-col items-center space-y-[50px]">
+           
+            <div class="flex items-center gap-1" aria-label="Select rating">
+              <button
+                v-for="i in 5"
+                :key="i"
+                type="button"
+                class="focus:outline-none"
+                :aria-pressed="i <= newReview.rating"
+                @click="newReview.rating = i"
+                :title="`Rate ${i} star${i>1?'s':''}`"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                  :class="i <= newReview.rating ? 'text-yellow-400' : 'text-gray-300'"
+                >
+                  <path
+                    d="M12 .587l3.668 7.568L24 9.748l-6 5.849L19.336 24 12 19.897 4.664 24 6 15.597 0 9.748l8.332-1.593z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+           
+            <button
+              class="bg-[#4d148c] text-white px-4 py-2 rounded-lg"
+              :disabled="submitting"
+              @click="submitReview"
+            >
+              <span v-if="!submitting" >Send</span>
+              <span v-else>Sending...</span>
+            </button>
+            </div>
+          </div>
         </div>
+
+       
+        <p class="text-sm text-red-600 mt-2" v-if="errorMsg">{{ errorMsg }}</p>
+        <p class="text-sm text-green-600 mt-2" v-if="successMsg">{{ successMsg }}</p>
+
+        <div class="mt-6">
+          
+          <div v-if="visibleReviews.length === 0" class="text-gray-500 italic">
+            No reviews yet. Be the first to write one!
+          </div>
+
+         
+          <div
+            v-for="rev in visibleReviews"
+            :key="rev._id"
+            class=" py-3 bg-white rounded-md px-3 mb-5"
+          >
+            <p class="font-semibold">
+              {{ rev?.userId?.name || 'Anonymous' }}
+            </p>
+
+            <div class="flex items-center gap-2">
+            
+              <div class="flex py-[5px]">
+                <svg
+                  v-for="i in 5"
+                  :key="i"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4"
+                  :class="i <= rev.rating ? 'text-yellow-400' : 'text-gray-300'"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 .587l3.668 7.568L24 9.748l-6 5.849L19.336 24 12 19.897 4.664 24 6 15.597 0 9.748l8.332-1.593z"
+                  />
+                </svg>
+              </div>
+
+              
+              <span class="text-xs text-gray-500">
+                {{ formatDate(rev.createdAt) }}
+              </span>
+            </div>
+
+           
+            <p class="mt-1 whitespace-pre-line">
+              {{ rev.comment }}
+            </p>
+
+            
+             <div class="text-sm text-gray-500 mt-1 flex items-center gap-1">
+    <!-- Like button -->
+    <button 
+      @click="toggleLike(rev)" 
+      class="focus:outline-none"
+    >
+      👍
+    </button>
+
+    <!-- Display like count -->
+    <span>{{ rev.likesCount || (rev.likes ? rev.likes.length : 0) || 0 }}</span>
+  </div>
+          </div>
+
+          
+          <div class="mt-4 flex items-center gap-4" v-if="reviews.length > 3">
+            <button
+              v-if="visibleCount < reviews.length"
+              @click="showMore"
+              class="text-purple-700 flex items-center gap-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.7a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Show more
+            </button>
+
+            <button
+              v-if="visibleCount > 3"
+              @click="showLess"
+              class="text-purple-700 flex items-center gap-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M14.77 12.79a.75.75 0 01-1.06-.02L10 9.06l-3.71 3.7a.75.75 0 11-1.06-1.06l4.24-4.24a.75.75 0 011.06 0l4.24 4.24c.29.29.29.77 0 1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Show less
+            </button>
+          </div>
+        </div>
+      </div>
 
         <div  id="costs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
           <h1 class="font-[800] text-[30px]">Cost and Payment Plan</h1>
@@ -353,65 +513,173 @@
     </div>
   </template>
 
-  <script setup>
-  import { useRoute } from "vue-router";
- import { ref, onMounted, nextTick  } from "vue";
-  import axios from "axios";
+ <script setup>
+import { useRoute } from "vue-router";
+import { ref, onMounted, nextTick, computed } from "vue";
+import axios from "axios";
+
+const course = ref(null);
+const route = useRoute();
+const courseId = route.params.id;
+const jobOpportunities = ref([]);
+const loading = ref(true);
+
+const currentUserId = ref(localStorage.getItem("userId") || null); // ✅ pull from localStorage directly
+
+const reviews = ref([]);
+const visibleCount = ref(3);
+const visibleReviews = computed(() =>
+  reviews.value.slice(0, visibleCount.value)
+);
+
+const newReview = ref({
+  rating: 0,
+  comment: "",
+});
+
+const submitting = ref(false);
+const errorMsg = ref("");
+const successMsg = ref("");
+
+// Format review date
+const formatDate = (iso) => {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+// Show more/less reviews
+const showMore = () => {
+  visibleCount.value = Math.min(visibleCount.value + 10, reviews.value.length);
+};
+
+const showLess = () => {
+  visibleCount.value = 3;
+  requestAnimationFrame(() => scrollToSection("reviews"));
+};
 
 
 
-  const course = ref(null);
-  const route = useRoute();
-  const courseId = route.params.id;
-  const jobOpportunities = ref([]);
-  const loading = ref(true);
+  const submitReview = async () => {
+  console.log("submitReview called");
+
+  errorMsg.value = "";
+  successMsg.value = "";
+
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+
+  if (!token || !userId) {
+    errorMsg.value = "You need to log in before posting a review.";
+    return;
+  }
+
+  if (newReview.value.rating < 1 || newReview.value.rating > 5) {
+    errorMsg.value = "Please select a star rating (1–5).";
+    return;
+  }
+  if (!newReview.value.comment.trim()) {
+    errorMsg.value = "Please write a review comment.";
+    return;
+  }
+
+  submitting.value = true;
+  try {
+    const response = await axios.post(
+      `https://zacraclearningwebsite.onrender.com/review/${courseId}/add-review?user=${userId}`, 
+      { rating: newReview.value.rating, comment: newReview.value.comment },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    );
+
+    const created = response?.data?.review || {
+      _id: Math.random().toString(36).slice(2),
+      userId: { _id: currentUserId.value, name: "You" },
+      rating: newReview.value.rating,
+      comment: newReview.value.comment.trim(),
+      likes: [],
+      likesCount: 0,
+      createdAt: new Date().toISOString(),
+    };
+
+    reviews.value.unshift(created);
+
+    newReview.value.rating = 0;
+    newReview.value.comment = "";
+    successMsg.value = "Review submitted!";
+  } catch (e) {
+    console.error("Submit review failed:", e);
+    errorMsg.value = e?.response?.data?.message || "Failed to submit review.";
+  } finally {
+    submitting.value = false;
+  }
+};
 
 
 const nav = ref("description");
-
 const scrollToSection = async (id) => {
   nav.value = id;
 
   await nextTick();
   const el = document.getElementById(id);
   if (el) {
-   
     const y = el.getBoundingClientRect().top + window.scrollY;
-
-    
     const offset = 120;
-
     window.scrollTo({
       top: y - offset,
       behavior: "smooth",
     });
   }
 };
+const toggleLike = async (rev) => {
+  const token = localStorage.getItem("token"); // get JWT from localStorage
+  const userId = localStorage.getItem("userId"); // get logged-in user ID
 
-
-  
-
-
-  onMounted(async () => {
-    try {
-      const response = await axios.get(
-        `https://zacraclearningwebsite.onrender.com/courses/${courseId}`
-      );
-      course.value = response.data.course;
-      jobOpportunities.value = response.data.jobOpportunities;
-
-      console.log(response);
-    } catch (error) {
-      console.error("Error fetching by Id:", error);
-    }finally {
-    loading.value = false; 
+  if (!token || !userId) {
+    alert("You need to log in to like reviews"); // inform user if not logged in
+    return;
   }
-  });
+
+  try {
+    // TODO: Make sure backend supports this route
+    // POST /review/:reviewId/like -> toggles like
+    const response = await axios.post(
+      `https://zacraclearningwebsite.onrender.com/review/${rev._id}/like`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // Update the review likes in local state for instant UI feedback
+    rev.likesCount = response.data.likesCount; 
+  } catch (e) {
+    console.error("Failed to like review", e);
+  }
+};
 
 
+onMounted(async () => {
+  try {
+    const response = await axios.get(
+      `https://zacraclearningwebsite.onrender.com/courses/${courseId}`
+    );
+    course.value = response.data.course;
+    jobOpportunities.value = response.data.jobOpportunities;
+    reviews.value = response.data.reviews || [];
+  } catch (error) {
+    console.error("Error fetching by Id:", error);
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
 
 
-  </script>
 
 <style scoped>
 .miniex {

@@ -26,7 +26,7 @@
             <div style="margin-top: 0px;">
               <p>
                 Don't have an account?
-                <router-link to="/register" style="margin-left: 5px;">Sign Up</router-link>
+                <router-link to="/register" style="margin-left: 5px; color: blueviolet;">Sign Up</router-link>
               </p>
             </div>
           </div>
@@ -46,18 +46,17 @@
               <input type="password" placeholder="Password" class="forms" v-model="loginForm.password">
 
               <div style="margin-top: 10px">
-               <p>Forgot Password? <router-link to="/forgot-password" target="_blank" style="">Click here </router-link></p>
+               <p>Forgot Password? <router-link to="/forgot-password" target="_blank" style="color: blueviolet;">Click here </router-link></p>
               </div>
 
               <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;" class="flex-col gap-4 md:flex md:flex-row">
                 <button class="signbutton cursor-pointer" type="submit" :disabled="loader">
                   {{ loader ? "Signing In..." : "Sign In" }}
                 </button>
-                
-                <div style="width: 80px; justify-content: space-around; display: flex;">
-                  <button class="cursor-pointer" ><img src="@/assets/logos_facebook (1).png" alt="" class="logolink"></button>
-                  <button class="cursor-pointer"><img src="@/assets/flat-color-icons_google (1).png" alt="" class="logolink"></button>
-                </div>
+              
+                <div class="flex justify-center sm:justify-around items-center w-full sm:w-[80px]">
+                <GoogleLogin :callback="handleGoogleLogin"/>
+                 </div>
               </div>
             </form>
           </div>
@@ -79,9 +78,10 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { googleTokenLogin } from "vue3-google-login"
 
-const loader = ref(false) // for Sign In button
-const loading = ref(true) // for fullscreen loader
+const loader = ref(false) 
+const loading = ref(true) 
 const router = useRouter()
 const errormsg = ref("")
 
@@ -90,11 +90,11 @@ const loginForm = ref({
   password: "",
 })
 
-// Simulate initial page load
+
 onMounted(() => {
   setTimeout(() => {
     loading.value = false
-  }, 1000) // 1 second loader, adjust as needed
+  }, 1000) 
 })
 
 async function sign_in() {
@@ -111,7 +111,10 @@ async function sign_in() {
     )
 
     const token = response.data.token
+    const userId = response.data.user._id;
+    console.log(response.data.user._id);
     localStorage.setItem("token", token)
+    localStorage.setItem("userId", userId);
     localStorage.setItem("loginTime", Date.now())
     router.push("/")
   } catch (error) {
@@ -127,7 +130,23 @@ async function sign_in() {
   } finally {
     loader.value = false
   }
+}const handleGoogleLogin = () => {
+
+  window.location.href = 
+    "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google";
 }
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("token");
+
+  if (token) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("loginTime", Date.now());
+    router.push("/");
+  }
+});
+
 </script>
 
 

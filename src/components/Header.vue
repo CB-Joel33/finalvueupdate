@@ -25,7 +25,7 @@
         <div
           style="display: flex; align-items: center; gap: 4px; cursor: pointer"
         >
-          <Dropdown />
+          <Dropdown @selectDepartment="dept => $emit('selectDepartment', dept)" />
         </div>
 
         <div style="text-decoration: none; color: black" class="topnav">
@@ -38,18 +38,15 @@
           >Contact us</router-link
         >
       </div>
-      <div>
-        <button class="purplebutton">
-          <span style="font-family: 'Poppins', sans-serif; font-weight: 600"
-            >Start Learning</span
-          >
-          <img
-            src="@/assets/send.png"
-            alt="Send Icon"
-            style="width: 13px; height: 13px; margin-left: 10px"
-          />
-        </button>
-      </div>
+      <router-link to="/login" class="purplebutton">
+  <span style="font-family: 'Poppins', sans-serif; font-weight: 600">Login</span>
+  <img
+    src="@/assets/send.png"
+    alt="Send Icon"
+    style="width: 13px; height: 13px; margin-left: 10px"
+  />
+</router-link>
+
     </nav>
   </div>
 </template>
@@ -57,6 +54,12 @@
 <script setup>
 import Dropdown from './Dropdown.vue';
 import aboutDropdown from './aboutDropdown.vue';
+
+const emit = defineEmits(["selectDepartment"])
+
+function handleSelectDepartment(dept) {
+  emit("selectDepartment", dept)
+}
 
 </script>
 
