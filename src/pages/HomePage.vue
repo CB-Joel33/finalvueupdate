@@ -146,7 +146,7 @@
   <div class="flex flex-col items-center justify-center text-center px-4 md:px-0 h-full">
     
    
-    <img src="@/assets/Label.png" alt="" class="mb-3 md:mb-4" />
+    
 
    
     <h6 class="font-bold text-base md:text-lg lg:text-xl max-w-xl md:max-w-2xl mx-auto mb-6">
@@ -176,7 +176,7 @@
     <div style="margin-top: 7px;"> 
       <p style="margin: 0; font-family: 'Matter', sans-serif;">TESTIMONIALS</p>
       <p style="color: #000066; font-weight: 550; font-size: 35px; margin: 0;">
-        Hear from people like you who achieved their Tech Dreams with Technify Academy
+        Hear from people like you who achieved their Tech Dreams with Zacrac Learning
       </p>
     </div>
 

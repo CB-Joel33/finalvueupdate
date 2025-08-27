@@ -17,13 +17,25 @@ const routes = [
   { path: "/forgot-password", name: "ForgotPassword", component: ForgotPassword },
   { path: "/reset-password/:token", component: ResetPassword },
   { path: "/resetpassword/:token", component: ResetPassword },
-
- 
-  { path: "/token/:token", component: LoginPage },
-
   { path: "/allCourses", name: "AllCourses", component: AllCourses },
   { path: "/allCourses/:id", name: "CoursesDetail", component: CoursesDetails },
+
+  
+   {
+    path: "/token=:token",
+    beforeEnter: (to, from, next) => {
+      const token = to.params.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("loginTime", Date.now());
+      }
+
+      next("/");
+     }
+  }
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),

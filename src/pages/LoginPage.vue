@@ -75,23 +75,22 @@
 
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "axios";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 const loader = ref(false);
-const loading = ref(true);
-const router = useRouter();
-const route = useRoute();
 const errormsg = ref("");
+const router = useRouter();
 
-// Login form state
+// ------------------ Login form state ------------------
 const loginForm = ref({
   email: "",
   password: "",
 });
 
-// -------- Normal Login --------
+// ------------------ Normal Login ------------------
 async function sign_in() {
   errormsg.value = "";
   loader.value = true;
@@ -108,12 +107,16 @@ async function sign_in() {
     const token = response.data.token;
     const userId = response.data._id;
 
+    // Store login data
     localStorage.setItem("token", token);
     localStorage.setItem("userId", userId);
     localStorage.setItem("loginTime", Date.now());
 
-    await fetchUserData(token);
-    router.push("/"); // ✅ redirect to homepage
+    // 👇 optional: fetch user profile if you need it
+    // await fetchUserData(token);
+
+    // Redirect to homepage
+    router.push("/");
   } catch (error) {
     const message = error.response?.data?.message?.toLowerCase();
 
@@ -129,47 +132,34 @@ async function sign_in() {
   }
 }
 
-// -------- Google Login Redirect --------
+// ------------------ Google Login Redirect ------------------
 const handleGoogleLogin = () => {
   window.location.href =
     "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google";
 };
 
-onMounted(async () => {
-  setTimeout(() => {
-    loading.value = false;
-  }, 800);
-
+onMounted(() => {
   let token = null;
 
-  // --- Case 1: query param (?token=abcd)
+  // Case 1: if backend sends ?token=xxxxx
   const urlParams = new URLSearchParams(window.location.search);
   token = urlParams.get("token");
 
-  // --- Case 2: path like /token=abcd
+  // Case 2: if backend sends /token=xxxxx
   if (!token && window.location.pathname.startsWith("/token=")) {
     token = window.location.pathname.split("=")[1];
   }
 
-  // --- Case 3: path like /token/abcd (using route param)
-  if (!token && route.params.token) {
-    token = route.params.token;
-  }
-
-  // --- If we got a token, save & redirect
   if (token) {
+    // Save to localStorage
     localStorage.setItem("token", token);
     localStorage.setItem("loginTime", Date.now());
 
-    await fetchUserData(token); // load user info
+  
+    router.replace("/");
   }
-
-  // 🚀 Finally, go to homepage no matter what
-  router.push("/");
 });
-
 </script>
-
 
 
 
