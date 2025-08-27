@@ -75,31 +75,26 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
-import { googleTokenLogin } from "vue3-google-login"
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useRouter, useRoute } from "vue-router";
 
-const loader = ref(false) 
-const loading = ref(true) 
-const router = useRouter()
-const errormsg = ref("")
+const loader = ref(false);
+const loading = ref(true);
+const router = useRouter();
+const route = useRoute();
+const errormsg = ref("");
 
+// Login form state
 const loginForm = ref({
   email: "",
   password: "",
-})
+});
 
-
-onMounted(() => {
-  setTimeout(() => {
-    loading.value = false
-  }, 1000) 
-})
-
+// -------- Normal Login --------
 async function sign_in() {
-  errormsg.value = ""
-  loader.value = true
+  errormsg.value = "";
+  loader.value = true;
 
   try {
     const response = await axios.post(
@@ -108,46 +103,79 @@ async function sign_in() {
         email: loginForm.value.email,
         password: loginForm.value.password,
       }
-    )
+    );
 
-    const token = response.data.token
+    const token = response.data.token;
     const userId = response.data._id;
 
-    localStorage.setItem("token", token)
+    localStorage.setItem("token", token);
     localStorage.setItem("userId", userId);
-    localStorage.setItem("loginTime", Date.now())
-    router.push("/")
+    localStorage.setItem("loginTime", Date.now());
+
+    await fetchUserData(token);
+    router.push("/"); // ✅ redirect to homepage
   } catch (error) {
-    const message = error.response?.data?.message?.toLowerCase()
+    const message = error.response?.data?.message?.toLowerCase();
 
     if (message?.includes("password")) {
-      errormsg.value = "Wrong Password"
+      errormsg.value = "Wrong Password";
     } else if (message?.includes("email")) {
-      errormsg.value = "No Account Exist For This Email"
+      errormsg.value = "No Account Exists For This Email";
     } else {
-      errormsg.value = "An error has occured. Please try Again"
+      errormsg.value = "An error has occurred. Please try again.";
     }
   } finally {
-    loader.value = false
+    loader.value = false;
   }
-}const handleGoogleLogin = () => {
-
-  window.location.href = 
-    "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google";
 }
 
-onMounted(() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get("token");
+// -------- Google Login Redirect --------
+const handleGoogleLogin = () => {
+  window.location.href =
+    "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google";
+};
 
+onMounted(async () => {
+  setTimeout(() => {
+    loading.value = false;
+  }, 800);
+
+  let token = null;
+
+  // --- Case 1: query param (?token=abcd)
+  const urlParams = new URLSearchParams(window.location.search);
+  token = urlParams.get("token");
+
+  // --- Case 2: path like /token=abcd
+  if (!token && window.location.pathname.startsWith("/token=")) {
+    token = window.location.pathname.split("=")[1];
+  }
+
+  // --- Case 3: path like /token/abcd (using route param)
+  if (!token && route.params.token) {
+    token = route.params.token;
+  }
+
+  // --- If we got a token, save & redirect
   if (token) {
     localStorage.setItem("token", token);
     localStorage.setItem("loginTime", Date.now());
-    router.push("/");
+
+    await fetchUserData(token); // load user info
   }
+
+  // 🚀 Finally, go to homepage no matter what
+  router.push("/");
 });
 
 </script>
+
+
+
+
+<style scoped>
+</style>
+
 
 
 <style scoped>

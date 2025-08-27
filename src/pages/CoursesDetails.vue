@@ -132,6 +132,7 @@
         Course Description
       </button>
 
+
       <button
         class="shortcut w-[170px] rounded-[30px] p-2"
         :class="nav === 'curriculum' ? 'border-2 border-purple-600 bg-white' : ''"
