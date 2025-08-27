@@ -111,8 +111,8 @@ async function sign_in() {
     )
 
     const token = response.data.token
-    const userId = response.data.user._id;
-    console.log(response.data.user._id);
+    const userId = response.data._id;
+
     localStorage.setItem("token", token)
     localStorage.setItem("userId", userId);
     localStorage.setItem("loginTime", Date.now())

@@ -12,7 +12,9 @@
   class="hidden md:flex md:flex-wrap">
     <nav class="navbar">
       <div>
-        <img src="@/assets/logo.png" />
+        <router-link to="/">
+    <img src="@/assets/logo.png" alt="Logo" class="cursor-pointer" />
+  </router-link>
       </div>
       <div
         style="
@@ -59,6 +61,10 @@ const emit = defineEmits(["selectDepartment"])
 
 function handleSelectDepartment(dept) {
   emit("selectDepartment", dept)
+}
+
+const goHome = () => {
+  router.push({ name: 'Home' }) 
 }
 
 </script>

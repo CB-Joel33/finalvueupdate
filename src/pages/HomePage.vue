@@ -13,8 +13,8 @@
             </div>
            <div style="font-size: 14px; display: flex; align-items: center; margin-top: 7px; gap: 7px;">
   <p style="color: #F26100; margin: 0;">Suggestion:</p>
-  <router-link to="" >UI/UX</router-link>
-  <router-link to="" >Data Analysis</router-link>
+  <router-link to="" style="color: purple;" >UI/UX</router-link>
+  <router-link to="" style="color: purple;">Data Analysis</router-link>
 </div>
 
           </div>
@@ -48,81 +48,93 @@
 
   <section>
 
-<div style="margin-top: 80px; margin-left: 155px; width: 80%;">
+<div class="mt-20 mx-auto w-11/12 md:w-4/5">
   
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <p style="color: #000066; font-weight: bold; font-size: 25px; margin: 0;">
+  
+  <div class="flex flex-col md:flex-row justify-between items-center">
+    <p class="text-[#000066] font-bold text-2xl md:text-3xl m-0">
       Course Catalog
     </p>
-    <img src="@/assets/Group (1).png" alt="" style="width: 100px; height: auto; margin-right: 100px;" />
+    <img src="@/assets/Group (1).png" alt="" class="w-24 md:w-28 hidden md:flex h-auto md:mr-24 mt-4 md:mt-0" />
   </div>
 
   
-  <div style="margin-top: -15px;">
-    <h6 style="margin: 0; font-weight: normal;">
+  <div class="mt-2 md:mt-0">
+    <h6 class="m-0 font-normal text-sm md:text-base text-gray-700">
       Explore expert-led courses designed to equip you with practical, in-demand skills that help you grow,
       succeed, and stay ahead in your career.
     </h6>
   </div>
 </div>
 
-<div style=" width:80%;margin-left: 155px;margin-top: 20px">
-<div ref="filterSection" style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:20px" class="sm:hidden md:flex">
-
-  <button class="buttonfilter" @click="setDepartment('All')"><p>All</p></button>
-  <button class="buttonfilter" @click="setDepartment('Data')"><p>Data</p></button>
-  <button class="buttonfilter" @click="setDepartment('Product Design')"><p>Product Design</p></button>
-  <button class="buttonfilter" @click="setDepartment('Cybersecurity')"><p>Cybersecurity</p></button>
-  <button class="buttonfilter" @click="setDepartment('Project Management')"><p> Project Management</p></button>
-  <button class="buttonfilter" @click="setDepartment('Software Development')"><p> Software Development</p></button>
-
-   
-
-</div>
+<div class="w-11/12 md:w-4/5 mx-auto mt-5">
+  <div ref="filterSection" class="flex flex-wrap gap-4 justify-start">
+    
+    <button class="buttonfilter px-4 py-2 min-w-[120px]" @click="setDepartment('All')"><p>All</p></button>
+    <button class="buttonfilter px-4 py-2 min-w-[120px]" @click="setDepartment('Data')"><p>Data</p></button>
+    <button class="buttonfilter px-4 py-2 min-w-[140px]" @click="setDepartment('Product Design')"><p>Product Design</p></button>
+    <button class="buttonfilter px-4 py-2 min-w-[140px]" @click="setDepartment('Cybersecurity')"><p>Cybersecurity</p></button>
+    <button class="buttonfilter px-4 py-2 min-w-[160px]" @click="setDepartment('Project Management')"><p>Project Management</p></button>
+    <button class="buttonfilter px-4 py-2 min-w-[160px]" @click="setDepartment('Software Development')"><p>Software Development</p></button>
+    
+  </div>
 </div>
 
 
-  <div style="width: 80%; margin-left: 155px; margin-top: 20px;"  ref="coursesSection">
-    <div v-if="courses && courses.length" style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr; gap: 5px;">
-      <div v-for="course in courses" :key="course._id" class="coursecards">
-        <div style="flex: 1;">
-          <img :src="course.imageUrl" alt="" style="overflow: hidden; object-fit: cover; height: 250px; width: 100%;">
+
+
+  <div class="w-11/12 md:w-4/5 mx-auto mt-5" ref="coursesSection">
+  <div v-if="courses && courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    
+    <div v-for="course in courses" :key="course._id" class="coursecards bg-white shadow-md rounded-lg overflow-hidden">
+      
+     
+      <div class="h-64 w-full overflow-hidden">
+        <img :src="course.imageUrl" alt="" class="w-full h-full object-cover">
+      </div>
+      
+      
+      <div class="p-4">
+        
+        <p class="font-bold font-poppins text-base mb-2">{{ course.title }}</p>
+        
+       
+        <div class="flex items-center gap-2 mb-3">
+          <img src="@/assets/Frame 85.png" alt="" class="w-8 h-4">
+          <h6 class="text-xs text-gray-600 m-0">{{ course.numberOfEnrolled }} people enrolled</h6>
         </div>
-        <div style="flex: 1;">
-          <div style="margin-left: 10px">
-            <div style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-              <p style="margin: 0;margin-top: 6px">{{ course.title }}</p>
-            </div>
-            <div style="display: flex; align-items: center; gap: 5px;">
-              <img src="@/assets/Frame 85.png" alt="" style="width: 30px; height: 16px;">
-              <h6 style="opacity: 0.7; font-size: 12px; margin: 0;">{{ course.numberOfEnrolled }} people enrolled</h6>
-            </div>
-            <div style="margin-top: 15px;">
-              <div style="font-size: 13px;">Mode: On-Site/Remote</div>
-              <div style="font-size: 13px;">Duration: {{ course.duration }}</div>
-              <div style="font-size: 13px;">Payment Type: Full/Installment</div>
-              <p style="font-weight: bold; font-size: 14px;">{{ formatPrice(course.price) }}</p>
-            </div>
-            <div style="display: flex; align-items: center; margin-top: 20px;">
-              <router-link :to="`/allCourses/${course._id}`" class="viewbutton">
-                <p>Preview Course</p>
-              </router-link>
-            </div>
-          </div>
+        
+        
+        <div class="text-sm mb-3">
+          <div>Mode: On-Site/Remote</div>
+          <div>Duration: {{ course.duration }}</div>
+          <div>Payment Type: Full/Installment</div>
         </div>
+        
+        
+        <p class="font-bold text-sm mb-4">{{ formatPrice(course.price) }}</p>
+        
+        
+        <router-link :to="`/allCourses/${course._id}`" class="viewbutton inline-block">
+          <p class="text-center">Preview Course</p>
+        </router-link>
       </div>
     </div>
-
     
-    <Pagination
-      :current-page="page"
-      :total-pages="totalPages"
-      :has-previous-page="page > 1"
-      :has-next-page="page < totalPages"
-      :loading="loading"
-      @page-change="handlePageChange"
-    />
   </div>
+
+ 
+  <Pagination
+    :current-page="page"
+    :total-pages="totalPages"
+    :has-previous-page="page > 1"
+    :has-next-page="page < totalPages"
+    :loading="loading"
+    @page-change="handlePageChange"
+    class="mt-6"
+  />
+</div>
+
 
     
        
@@ -130,18 +142,26 @@
   
 
   </section>
+<section class="bg-[#E8EEE9] mt-16 py-16">
+  <div class="flex flex-col items-center justify-center text-center px-4 md:px-0 h-full">
+    
+   
+    <img src="@/assets/Label.png" alt="" class="mb-3 md:mb-4" />
 
-<section style="height: 300px; background-color: #E8EEE9; margin-top: 60px;">
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
-    <img src="@/assets/Label.png" alt="" style="margin-bottom: 10px;" />
-    <h6 style="margin: 10px 0; max-width: 600px;font-weight: bold">Have you already learned a Tech Skill and want to hone your skills by working on Projects with a Mentor?</h6>
-   <button style="padding: 10px 20px; margin-top: 30px; border-radius: 10px; display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 500; border: 1px solid black; ">
-  <span >Explore Project Build & Mentorship Program</span>
-  <img src="@/assets/send2.png" alt="Send Icon" style="width: 13px; height: 13px;" />
-</button>
+   
+    <h6 class="font-bold text-base md:text-lg lg:text-xl max-w-xl md:max-w-2xl mx-auto mb-6">
+      Have you already learned a Tech Skill and want to hone your skills by working on Projects with a Mentor?
+    </h6>
+
+    
+    <button class="flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 rounded-lg border border-black font-poppins font-medium text-sm md:text-base">
+      <span>Explore Project Build & Mentorship Program</span>
+      <img src="@/assets/send2.png" alt="Send Icon" class="w-3 h-3 md:w-4 md:h-4" />
+    </button>
 
   </div>
 </section>
+
 
 </div>
 <section>
@@ -161,138 +181,141 @@
     </div>
 
    
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; margin-top: 80px; width: 80%; margin-left: 30px">
-      
-      <div class="reviewcards"  style="background-color: #DBDBDB">
-        <div class="card-content">
-          <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
+    <div class="w-11/12 mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-          <div style="text-align: center;">
-            <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-            <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
+  <div class="reviewcards" style="background-color: #DBDBDB">
+    <div class="card-content">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
 
-            <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-              <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-            </div>
-          </div>
+      <div style="text-align: center;">
+        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
 
-          <h6 style=" margin-top: 8px; margin-bottom: 0;">
-            All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
-          </h6>
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
+          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
         </div>
       </div>
 
-      
-      <div class="reviewcards shadow-lg" style="height: 310px; margin-top: -20px" >
-        <div class="card-content">
-          <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
-
-          <div style="text-align: center;">
-            <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-            <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
-
-            <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-              <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-            </div>
-          </div>
-
-          <h6 style=" margin-top: 8px; margin-bottom: 0;">
-            All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
-          </h6>
-        </div>
-      </div>
-
-      <div class="reviewcards"  style="background-color: #DBDBDB">
-        <div class="card-content">
-          <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
-
-          <div style="text-align: center;">
-            <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-            <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
-
-            <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-              <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-            </div>
-          </div>
-
-          <h6 style=" margin-top: 8px; margin-bottom: 0;">
-            All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
-          </h6>
-        </div>
-      </div>
-
+      <h6 style=" margin-top: 8px; margin-bottom: 0;">
+        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      </h6>
     </div>
   </div>
-</section>
- <footer style="background-color: #131313; color: white; padding: 40px 60px;margin-top: 30px;">
 
-  <div style="display: grid; grid-template-columns: 1fr 1.5fr 0.5fr; gap: 40px; height: 100%;">
+  <div class="reviewcards shadow-lg" style="height: 310px; margin-top: -20px">
+    <div class="card-content">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
 
-    
-    <div style="display: flex; flex-direction: column; gap: 15px; ">
-      <img src="@/assets/Logo (1).png"  style="width: 200px;"/>
-      <p style=" font-family: 'Abel', sans-serif; font-size: 30px; margin-top: 10px;">Africa’s No. 1 Data<br> School</p>
-     <div style="margin:0 -10px ; display: flex; align-items: center;">
-  <img src="@/assets/Frame 58.png"   style="margin-right: -25px "/>
-  <img src="@/assets/Frame 59.png"  style="margin-right: -25px "/>
-  <img src="@/assets/Frame 60.png"  style="margin-right: -25px "/>
-  <img src="@/assets/Frame 61.png"  style="margin-right: -25px "/>
+      <div style="text-align: center;">
+        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
+
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
+          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
+        </div>
+      </div>
+
+      <h6 style=" margin-top: 8px; margin-bottom: 0;">
+        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      </h6>
+    </div>
+  </div>
+
+  <div class="reviewcards" style="background-color: #DBDBDB">
+    <div class="card-content">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
+
+      <div style="text-align: center;">
+        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
+
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
+          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
+        </div>
+      </div>
+
+      <h6 style=" margin-top: 8px; margin-bottom: 0;">
+        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      </h6>
+    </div>
+  </div>
+
 </div>
 
-      <p style="font-family: 'Matter', sans-serif; font-size: 10px;opacity: 0.7">© Copyright 2025 All Rights Reserved</p>
+  </div>
+</section>
+ <footer class="bg-[#131313] text-white pt-10 pb-10 px-6 md:px-16 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <!-- Logo & Branding -->
+    <div class="flex flex-col gap-4">
+      <router-link to="/">
+      <img src="@/assets/Logo (1).png" class="w-40 md:w-48" />
+      </router-link>
+      <p class="font-abel text-2xl md:text-3xl">Africa’s No. 1 Data<br> School</p>
+      <div class="flex -mx-2 items-center">
+        <img src="@/assets/Frame 58.png" class="-mr-6" />
+        <img src="@/assets/Frame 59.png" class="-mr-6" />
+        <img src="@/assets/Frame 60.png" class="-mr-6" />
+        <img src="@/assets/Frame 61.png" class="-mr-6" />
+      </div>
+      <p class="font-matter text-xs opacity-70">© Copyright 2025 All Rights Reserved</p>
     </div>
 
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-      <div style="display: flex; flex-direction: column; gap: 15px; ">
-        <p style="font-weight: bold;">Quick Links</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Blog</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Pricing</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Instructors</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Careers</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Affiliate Program</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Support</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Terms & Condition</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Privacy Policies</p>
+    <!-- Links Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <!-- Quick Links -->
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Quick Links</p>
+        <p class="text-xs">Blog</p>
+        <p class="text-xs">Pricing</p>
+        <p class="text-xs">Instructors</p>
+        <p class="text-xs">Careers</p>
+        <p class="text-xs">Affiliate Program</p>
+        <p class="text-xs">Support</p>
+        <p class="text-xs">Terms & Condition</p>
+        <p class="text-xs">Privacy Policies</p>
       </div>
 
-      
-      <div style="display: flex; flex-direction: column; gap: 15px; ">
-        <p style="font-weight: bold;">Ways to Learn</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Self-paced Courses</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Incubator Programs</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Cohort-based Courses</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Enterprise Learning</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Career-building Paths</p>
+      <!-- Ways to Learn -->
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Ways to Learn</p>
+        <p class="text-xs">Self-paced Courses</p>
+        <p class="text-xs">Incubator Programs</p>
+        <p class="text-xs">Cohort-based Courses</p>
+        <p class="text-xs">Enterprise Learning</p>
+        <p class="text-xs">Career-building Paths</p>
       </div>
 
-     
-      <div  style="display: flex; flex-direction: column; gap: 15px; ">
-        <p style="font-weight: bold;">Courses</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">MS Excel</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">R</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Power BI</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Python</p>
-        <p style="font-family: 'Matter', sans-serif; font-size: 12px;">SQL</p>
+      <!-- Courses -->
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Courses</p>
+        <p class="text-xs">MS Excel</p>
+        <p class="text-xs">R</p>
+        <p class="text-xs">Power BI</p>
+        <p class="text-xs">Python</p>
+        <p class="text-xs">SQL</p>
       </div>
     </div>
 
-  
-    <div style="display: flex; flex-direction: column; gap: 15px; ">
-      <p style="font-weight: bold;">Visit Us</p>
-      <p style="font-family: 'Matter', sans-serif; font-size: 12px;">2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo State, Nigeria.</p>
-      <p style="font-family: 'Matter', sans-serif; font-size: 12px;">Be the first to know about our exciting offers on Data Science, AI, and ML courses.</p>
-     
-     <div> <input type="email" placeholder="Type email Here..." style="font-family: 'Matter', sans-serif; font-size: 9px; color: white; background-color: black; border: none; border-bottom: 2px solid #333385; height: 30px;width: 170px"/>
-      <img src="@\assets\Frame 527.png"/>
+    <!-- Visit & Newsletter -->
+    <div class="flex flex-col gap-4">
+      <p class="font-bold">Visit Us</p>
+      <p class="text-xs">2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo State, Nigeria.</p>
+      <p class="text-xs">Be the first to know about our exciting offers on Data Science, AI, and ML courses.</p>
+      <div class="flex items-center gap-2">
+        <input type="email" placeholder="Type email Here..."
+          class="bg-black text-white text-xs border-b-2 border-[#333385] h-8 w-40 px-2 focus:outline-none" />
+        <img src="@/assets/Frame 527.png" class="h-8 w-8 object-contain" />
       </div>
     </div>
 
   </div>
 </footer>
+
 
 
   
@@ -444,6 +467,7 @@ watch(() => route.query.dept, (newDept) => {
   cursor: pointer;
   white-space: nowrap; 
   height: 35px;
+  padding: 5px;
   
 }
 .coursecards{

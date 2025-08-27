@@ -29,46 +29,59 @@
               <h1 class="md:text-3xl text-2xl font-[600]">{{ course.title }}</h1>
               <p class="mt-[20px]">{{ course.miniDescription }}</p>
               <!-- <p>instructors</p> -->
-              <div style="margin-top: 20px; gap: 7px; display: flex">
-                <div class="bg-white rounded-full py-[2px] font-semibold  flex items-center gap-2 px-3">
-                  <img
-                    src="@/assets/ph--chalkboard-teacher-light.svg"
-                    class="h-5 w-5"
-                  />
-                  <p>Instructor lead course</p>
-                </div>
-
-                <div class="bg-white rounded-full py-1 font-semibold flex items-center gap-2 px-6">
-                  <img
-                    src="@/assets/material-symbols--timer-outline-rounded.svg"
-                    class="h-[30px] w-[33px]"
-                  />
-                  <p class="flex-wrap w-[70px]">{{ course.duration }}</p>
-                </div>
-              </div>
-            <div class="mt-5 flex items-center gap-6 bg-white p-3 rounded flex-col md:flex-row flex-wrap">
-    
+             <div class="flex flex-wrap gap-2 mt-5">
   
-    <div class="flex items-center gap-1 ">
-      <img src="@/assets/icons8-signal-16.png" alt="" class="w-5 h-5 object-contain">
-      <p>Beginner and Intermediate</p>
-    </div>
-
-    <p>&</p>
-
-
-    <div class="flex items-center gap-1">
-      <img src="@/assets/icons8-signal-25.png" alt="" class="w-5 h-5 object-contain">
-      <p>Experienced</p>
-    </div>
-
-
-    <div class="flex items-center gap-2">
-      <img src="@/assets/icons8-play-50.png" alt="" class="w-5 h-5 object-contain">
-      <p>{{ course?.curriculum?.length || 0 }} Modules</p>
-    </div>
-
+  <div
+    class="bg-white rounded-full py-1 px-3 flex items-center gap-2 font-semibold"
+  >
+    <img
+      src="@/assets/ph--chalkboard-teacher-light.svg"
+      class="h-5 w-5"
+      alt="Instructor Lead"
+    />
+    <p class="text-sm sm:text-base">Instructor lead course</p>
   </div>
+
+  
+  <div
+    class="bg-white rounded-full py-1 px-4 flex items-center gap-2 font-semibold"
+  >
+    <img
+      src="@/assets/material-symbols--timer-outline-rounded.svg"
+      class="h-6 w-6 sm:h-[30px] sm:w-[33px]"
+      alt="Duration"
+    />
+    <p class="text-sm sm:text-base truncate w-20 sm:w-[70px]">
+      {{ course.duration }}
+    </p>
+  </div>
+</div>
+
+            <div class="mt-5 flex flex-col md:flex-row flex-wrap items-center gap-3 bg-white p-3 rounded">
+  
+  
+  <div class="flex items-center gap-2">
+    <img src="@/assets/icons8-signal-16.png" alt="Beginner" class="w-5 h-5 object-contain" />
+    <p class="text-sm md:text-base truncate">Beginner and Intermediate</p>
+  </div>
+
+ 
+  <p class="hidden md:block text-gray-500">&</p>
+
+  
+  <div class="flex items-center gap-2">
+    <img src="@/assets/icons8-signal-25.png" alt="Experienced" class="w-5 h-5 object-contain" />
+    <p class="text-sm md:text-base truncate">Experienced</p>
+  </div>
+
+  
+  <div class="flex items-center gap-2">
+    <img src="@/assets/icons8-play-50.png" alt="Modules" class="w-5 h-5 object-contain" />
+    <p class="text-sm md:text-base truncate">{{ course?.curriculum?.length || 0 }} Modules</p>
+  </div>
+
+</div>
+
   <div class="bg-white mt-10 p-[15px] rounded-[15px]">
     <p class="text-[13px] opacity-[0.8]">Course Duration</p>
 
@@ -79,33 +92,35 @@
 
             </div>
           </div>
-          <div class="md:w-5/12 w-full bg-white rounded-[15px] flex ">
-            <div><!-- video  --></div>
-            <div
-              style="
-                display: flex;
-                margin: auto;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center;
-                width: 80%;
-                height: 120px;
-                border: 1px solid #4d148c;
-                border-radius: 20px;
-              
-              "
-            >
-              <p style="font-size: 13px; padding-bottom: 5px">
-                Program fee payment can be in installments
-              </p>
-              <button class="enrollbutton">Enroll Now</button>
-            </div>
-          </div>
+          <div class="md:w-5/12 w-full bg-white rounded-[15px] flex flex-col items-center p-4 gap-4">
+  
+  <div class="w-full">
+    <iframe
+      class="w-full rounded-lg aspect-video"
+      :src="videoUrl"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  
+  <div
+    class="w-full flex flex-col items-center justify-center border border-purple-700 rounded-2xl p-4"
+  >
+    <p class="text-sm mb-2 text-center">
+      Program fee payment can be in installments
+    </p>
+    <button class="enrollbutton">Enroll Now</button>
+  </div>
+</div>
+
         </div>
       </div>
     </section>
 
-   <section class="ml-[80px] hidden md:flex md:flex-row md:flex-wrap">
+   <section class="ml-[80px] hidden lg:flex md:flex-row md:flex-wrap">
     <div
       class="opacity-[0.8] flex bg-gray-200 gap-[10px] w-3/4 rounded-[50px] p-[5px]"
     >
@@ -187,18 +202,31 @@
 
         </div >
 
-        <div id="instructors" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px] shadow-md" >
+        <div
+  id="instructors"
+  class="border border-slate-300 rounded-[20px] p-4 bg-gray-100 mb-10 shadow-md"
+>
+  <h1 class="font-extrabold text-2xl md:text-3xl mb-4">Meet Your Instructors</h1>
 
-          <h1 class="font-[800] text-[30px]">Meet Your Instructors</h1>
+  <div
+    class="border border-black/20 rounded-[15px] p-4 flex flex-col items-center
+           w-full md:w-1/4 h-auto md:h-[370px] mx-auto"
+  >
+    <div
+      class="w-24 h-24 md:w-20 md:h-20 rounded-full border border-black
+             overflow-hidden flex items-center justify-center mb-4"
+    >
+      <img
+        src="@/assets/icons8-user-50.png"
+        alt="Instructor"
+        class="w-full h-full object-cover"
+      />
+    </div>
 
-          <div class="border border-black-1 w-1/4 h-[370px] rounded-[15px] mt-[20px] p-[15px] ">
+    <p class="text-center text-sm md:text-base">Instructor Name</p>
+  </div>
+</div>
 
-          <div class="w-20 h-20 rounded-full border border-black overflow-hidden flex items-center justify-center">
-           <img src="@/assets/icons8-user-50.png" alt="" class="w-full h-full object-cover">
-          </div>
-
-        </div>
-        </div>
 
         <div  id="jobs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
           <h1 class="font-[800] text-[30px] m-[10px]">Job Opportunities</h1>
@@ -320,18 +348,17 @@
             </p>
 
             
-             <div class="text-sm text-gray-500 mt-1 flex items-center gap-1">
-    <!-- Like button -->
-    <button 
-      @click="toggleLike(rev)" 
-      class="focus:outline-none"
-    >
+            <div class="text-sm text-gray-500 mt-1 flex items-center gap-1">
+  <button 
+    @click="toggleLike(rev)" 
+    class="focus:outline-none"
+  >
+    <span :class="rev.likedByCurrentUser ? 'text-purple-700' : 'text-gray-400'">
       👍
-    </button>
-
-    <!-- Display like count -->
-    <span>{{ rev.likesCount || (rev.likes ? rev.likes.length : 0) || 0 }}</span>
-  </div>
+    </span>
+  </button>
+  <span>{{ rev.likesCount }}</span>
+</div>
           </div>
 
           
@@ -377,138 +404,75 @@
       </div>
     </section>
 
-    <footer style="background-color: #131313; color: white; padding: 40px 60px">
-      <div
-        style="
-          display: grid;
-          grid-template-columns: 1fr 1.5fr 0.5fr;
-          gap: 40px;
-          height: 100%;
-        "
-      >
-        <div style="display: flex; flex-direction: column; gap: 15px">
-          <img src="@/assets/Logo (1).png" alt="Logo" style="width: 200px" />
-          <p
-            style="
-              font-family: 'Abel', sans-serif;
-              font-size: 30px;
-              margin-top: 10px;
-            "
-          >
-            Africa’s No. 1 Data<br />
-            School
-          </p>
-          <div style="margin: 0 -10px; display: flex; align-items: center">
-            <img src="@/assets/Frame 58.png" style="margin-right: -25px" />
-            <img src="@/assets/Frame 59.png" style="margin-right: -25px" />
-            <img src="@/assets/Frame 60.png" style="margin-right: -25px" />
-            <img src="@/assets/Frame 61.png" style="margin-right: -25px" />
-          </div>
+    <footer class="bg-[#131313] text-white pt-10 pb-10 px-6 md:px-16 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-          <p
-            style="
-              font-family: 'Matter', sans-serif;
-              font-size: 10px;
-              opacity: 0.7;
-            "
-          >
-            © Copyright 2025 All Rights Reserved
-          </p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
-          <div style="display: flex; flex-direction: column; gap: 15px">
-            <p style="font-weight: bold">Quick Links</p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">Blog</p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Pricing
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Instructors
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Careers
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Affiliate Program
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Support
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Terms & Condition
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Privacy Policies
-            </p>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 15px">
-            <p style="font-weight: bold">Ways to Learn</p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Self-paced Courses
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Incubator Programs
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Cohort-based Courses
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Enterprise Learning
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Career-building Paths
-            </p>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 15px">
-            <p style="font-weight: bold">Courses</p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              MS Excel
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">R</p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Power BI
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-              Python
-            </p>
-            <p style="font-family: 'Matter', sans-serif; font-size: 12px">SQL</p>
-          </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 15px">
-          <p style="font-weight: bold">Visit Us</p>
-          <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-            2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo
-            State, Nigeria.
-          </p>
-          <p style="font-family: 'Matter', sans-serif; font-size: 12px">
-            Be the first to know about our exciting offers on Data Science, AI,
-            and ML courses.
-          </p>
-
-          <div>
-            <input
-              type="email"
-              placeholder="Type email Here..."
-              style="
-                font-family: 'Matter', sans-serif;
-                font-size: 9px;
-                color: white;
-                background-color: black;
-                border: none;
-                border-bottom: 2px solid #333385;
-                height: 30px;
-                width: 170px;
-              "
-            />
-            <img src="@\assets\Frame 527.png" />
-          </div>
-        </div>
+    
+    <div class="flex flex-col gap-4">
+      <router-link to="/">
+      <img src="@/assets/Logo (1).png" class="w-40 md:w-48" />
+      </router-link>
+      <p class="font-abel text-2xl md:text-3xl">Africa’s No. 1 Data<br> School</p>
+      <div class="flex -mx-2 items-center">
+        <img src="@/assets/Frame 58.png" class="-mr-6" />
+        <img src="@/assets/Frame 59.png" class="-mr-6" />
+        <img src="@/assets/Frame 60.png" class="-mr-6" />
+        <img src="@/assets/Frame 61.png" class="-mr-6" />
       </div>
-    </footer>
+      <p class="font-matter text-xs opacity-70">© Copyright 2025 All Rights Reserved</p>
+    </div>
+
+    
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Quick Links</p>
+        <p class="text-xs">Blog</p>
+        <p class="text-xs">Pricing</p>
+        <p class="text-xs">Instructors</p>
+        <p class="text-xs">Careers</p>
+        <p class="text-xs">Affiliate Program</p>
+        <p class="text-xs">Support</p>
+        <p class="text-xs">Terms & Condition</p>
+        <p class="text-xs">Privacy Policies</p>
+      </div>
+
+     
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Ways to Learn</p>
+        <p class="text-xs">Self-paced Courses</p>
+        <p class="text-xs">Incubator Programs</p>
+        <p class="text-xs">Cohort-based Courses</p>
+        <p class="text-xs">Enterprise Learning</p>
+        <p class="text-xs">Career-building Paths</p>
+      </div>
+
+      
+      <div class="flex flex-col gap-2">
+        <p class="font-bold">Courses</p>
+        <p class="text-xs">MS Excel</p>
+        <p class="text-xs">R</p>
+        <p class="text-xs">Power BI</p>
+        <p class="text-xs">Python</p>
+        <p class="text-xs">SQL</p>
+      </div>
+    </div>
+
+    
+    <div class="flex flex-col gap-4">
+      <p class="font-bold">Visit Us</p>
+      <p class="text-xs">2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo State, Nigeria.</p>
+      <p class="text-xs">Be the first to know about our exciting offers on Data Science, AI, and ML courses.</p>
+      <div class="flex items-center gap-2">
+        <input type="email" placeholder="Type email Here..."
+          class="bg-black text-white text-xs border-b-2 border-[#333385] h-8 w-40 px-2 focus:outline-none" />
+        <img src="@/assets/Frame 527.png" class="h-8 w-8 object-contain" />
+      </div>
+    </div>
+
+  </div>
+</footer>
+
     </div>
     </div>
   </template>
@@ -523,8 +487,9 @@ const route = useRoute();
 const courseId = route.params.id;
 const jobOpportunities = ref([]);
 const loading = ref(true);
+const videoUrl = ref("https://www.youtube.com/embed/yZvFH7B6gKI?controls=1&autoplay=0");
 
-const currentUserId = ref(localStorage.getItem("userId") || null); // ✅ pull from localStorage directly
+const currentUserId = ref(localStorage.getItem("userId") || null); 
 
 const reviews = ref([]);
 const visibleCount = ref(3);
@@ -541,7 +506,7 @@ const submitting = ref(false);
 const errorMsg = ref("");
 const successMsg = ref("");
 
-// Format review date
+
 const formatDate = (iso) => {
   if (!iso) return "";
   return new Date(iso).toLocaleDateString(undefined, {
@@ -551,7 +516,7 @@ const formatDate = (iso) => {
   });
 };
 
-// Show more/less reviews
+
 const showMore = () => {
   visibleCount.value = Math.min(visibleCount.value + 10, reviews.value.length);
 };
@@ -605,6 +570,7 @@ const showLess = () => {
       comment: newReview.value.comment.trim(),
       likes: [],
       likesCount: 0,
+      likedByCurrentUser: false,
       createdAt: new Date().toISOString(),
     };
 
@@ -638,26 +604,35 @@ const scrollToSection = async (id) => {
   }
 };
 const toggleLike = async (rev) => {
-  const token = localStorage.getItem("token"); // get JWT from localStorage
-  const userId = localStorage.getItem("userId"); // get logged-in user ID
+  const token = localStorage.getItem("token"); 
+  const userId = localStorage.getItem("userId"); 
 
   if (!token || !userId) {
-    alert("You need to log in to like reviews"); // inform user if not logged in
+    alert("You need to log in to like reviews"); 
     return;
   }
 
+  
+  rev.likedByCurrentUser = !rev.likedByCurrentUser;
+  rev.likesCount += rev.likedByCurrentUser ? 1 : -1;
+
   try {
-    // TODO: Make sure backend supports this route
-    // POST /review/:reviewId/like -> toggles like
     const response = await axios.post(
       `https://zacraclearningwebsite.onrender.com/review/${rev._id}/like`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    // Update the review likes in local state for instant UI feedback
-    rev.likesCount = response.data.likesCount; 
+    
+    if (response.data.review) {
+      rev.likesCount = response.data.review.likes.length;
+      rev.likedByCurrentUser = response.data.review.likes.includes(userId);
+    }
+
   } catch (e) {
+   
+    rev.likedByCurrentUser = !rev.likedByCurrentUser;
+    rev.likesCount += rev.likedByCurrentUser ? 1 : -1;
     console.error("Failed to like review", e);
   }
 };
@@ -670,7 +645,13 @@ onMounted(async () => {
     );
     course.value = response.data.course;
     jobOpportunities.value = response.data.jobOpportunities;
-    reviews.value = response.data.reviews || [];
+
+   reviews.value = (response.data.reviews || []).map(rev => ({
+  ...rev,
+  likedByCurrentUser: rev.likes?.includes(currentUserId.value) || false,
+  likesCount: rev.likes?.length || 0,
+}));
+
   } catch (error) {
     console.error("Error fetching by Id:", error);
   } finally {
