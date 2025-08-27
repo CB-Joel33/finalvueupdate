@@ -95,7 +95,7 @@
   <div class="w-11/12 md:w-4/5 mx-auto mt-5" ref="coursesSection">
   <div v-if="courses && courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
     
-    <div v-for="course in courses" :key="course._id" class="coursecards bg-white shadow-md rounded-lg overflow-hidden">
+    <div v-for="course in courses" :key="course._id" class="coursecards bg-white shadow-md rounded-lg overflow-hidden mb-5 px-3">
       
      
       <div class="h-64 w-full overflow-hidden">
