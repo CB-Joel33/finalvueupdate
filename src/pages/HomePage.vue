@@ -31,7 +31,18 @@
    
     </div>
 <div style="margin-top: 65px; width: 100%; display: flex; justify-content: center;">
-  <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; width: 85%;" class="animate-scroll">
+  <div
+    style="
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      width: 85%;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none; /* hide scrollbar Firefox */
+    "
+    class="animate-scroll"
+  >
     <img src="@/assets/image 22.png" />
     <img src="@/assets/image 24.png" />
     <img src="@/assets/image 76.png" />
@@ -39,19 +50,17 @@
     <img src="@/assets/image 23.png" />
     <img src="@/assets/image 25.png" />
     <img src="@/assets/image-removebg-preview (14) 1.png" />
-     <img src="@/assets/image 30.png" />
-
-    
+    <img src="@/assets/image 30.png" />
   </div>
+</div>
 
-  </div>
 
   <section>
 
 <div class="mt-20 mx-auto w-11/12 md:w-4/5">
   
   
-  <div class="flex flex-col md:flex-row justify-between items-center">
+  <div class="flex flex-col md:flex-row justify-between ">
     <p class="text-[#000066] font-bold text-2xl md:text-3xl m-0">
       Course Catalog
     </p>

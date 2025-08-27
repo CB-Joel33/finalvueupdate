@@ -9,7 +9,7 @@
       z-index: 1000;
       background-color: white;
     "
-    class="hidden md:flex md:flex-wrap"
+    class="flex flex-wrap items-center px-4"
   >
     <nav class="navbar">
       <!-- Logo -->
@@ -29,19 +29,19 @@
         "
       >
         <div
-          style="display: flex; align-items: center; gap: 4px; cursor: pointer"
+         style="display: flex; align-items: center; gap: 4px; cursor: pointer " 
         >
-          <Dropdown @selectDepartment="handleSelectDepartment" />
+          <Dropdown @selectDepartment="handleSelectDepartment" class="hidden md:flex" />
         </div>
 
-        <div style="text-decoration: none; color: black" class="topnav">
+        <div style="text-decoration: none; color: black" class="topnav hidden md:flex">
           <aboutDropdown />
         </div>
 
         <router-link
           to=""
           style="text-decoration: none; color: black"
-          class="topnav"
+          class="topnav hidden md:flex"
           >Contact us</router-link
         >
       </div>
