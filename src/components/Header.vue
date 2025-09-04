@@ -1,17 +1,9 @@
 <template>
   <div
-    style="
-      width: 100%;
-      height: 100px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      background-color: white;
-    "
+    style="width: 100%; height: 100px; position: fixed; top: 0; left: 0; z-index: 1000; background-color: white;"
     class="flex flex-wrap items-center px-4"
   >
-    <nav class="navbar">
+    <nav class="navbar w-full flex justify-between items-center">
       <!-- Logo -->
       <div>
         <router-link to="/">
@@ -19,36 +11,27 @@
         </router-link>
       </div>
 
-      <!-- Navigation -->
-      <div
-        style="
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          gap: 25px;
-        "
-      >
-        <div
-         style="display: flex; align-items: center; gap: 4px; cursor: pointer " 
+      <!-- Navigation (Desktop) -->
+      <div class="hidden md:flex items-center gap-6">
+        <router-link
+          to="/testimonials"
+          class="testimonials text-gray-700 hover:text-[#4D148C] font-semibold"
         >
-          <Dropdown @selectDepartment="handleSelectDepartment" class="hidden md:flex" />
-        </div>
+          Testimonials
+        </router-link>
 
-        <div style="text-decoration: none; color: black" class="topnav hidden md:flex">
-          <aboutDropdown />
-        </div>
+        <AboutDropdown />
 
         <router-link
-          to=""
-          style="text-decoration: none; color: black"
-          class="topnav hidden md:flex"
-          >Contact us</router-link
+          to="/contact"
+          class="text-gray-700 hover:text-[#4D148C] font-semibold"
         >
+          Contact Us
+        </router-link>
       </div>
 
-      <!-- ✅ Right side (Login OR Profile + Logout) -->
+      <!-- Right side (Profile + Hamburger) -->
       <div class="flex items-center gap-4">
-        <!-- Show profile circle + logout if logged in -->
         <template v-if="isLoggedIn">
           <div
             class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white cursor-pointer"
@@ -56,71 +39,79 @@
           >
             {{ userInitial }}
           </div>
-          <button
-            @click="logout"
-            class="px-4 py-2 rounded-lg border-2 border-purple-700 text-purple-700 font-medium bg-white hover:bg-purple-50"
-          >
-            Logout
-          </button>
         </template>
 
-        <!-- Show login button if not logged in -->
-        <router-link v-else to="/login" class="purplebutton">
-          <span style="font-family: 'Poppins', sans-serif; font-weight: 600"
-            >Login</span
-          >
-          <img
-            src="@/assets/send.png"
-            alt="Send Icon"
-            style="width: 13px; height: 13px; margin-left: 10px"
-          />
+        <router-link
+          v-else
+          to="/login"
+          class="purplebutton flex items-center gap-2 px-4 py-2 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
+        >
+          <span>Login</span>
+          <img src="@/assets/send.png" alt="Send Icon" class="w-3 h-3" />
         </router-link>
+
+        <!-- Hamburger (Mobile only, beside U) -->
+        <button
+          @click="menuOpen = !menuOpen"
+          class="md:hidden flex flex-col gap-1"
+        >
+          <span class="w-6 h-0.5 bg-gray-700"></span>
+          <span class="w-6 h-0.5 bg-gray-700"></span>
+          <span class="w-6 h-0.5 bg-gray-700"></span>
+        </button>
       </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div
+      v-if="menuOpen"
+      class="md:hidden absolute top-[100px] left-0 w-full bg-white shadow-lg flex flex-col gap-4 p-4"
+    >
+      <router-link
+        to="/testimonials"
+        class="text-gray-700 hover:text-[#4D148C] font-semibold"
+        @click="menuOpen = false"
+      >
+        Testimonials
+      </router-link>
+
+      <AboutDropdown />
+
+      <router-link
+        to="/contact"
+        class="text-gray-700 hover:text-[#4D148C] font-semibold"
+        @click="menuOpen = false"
+      >
+        Contact Us
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import Dropdown from "./Dropdown.vue";
-import aboutDropdown from "./aboutDropdown.vue";
+import AboutDropdown from "./aboutDropdown.vue";
 
 const router = useRouter();
 
-const emit = defineEmits(["selectDepartment"]);
-function handleSelectDepartment(dept) {
-  emit("selectDepartment", dept);
-}
-
-// ✅ reactive login state
+// Login state
 const isLoggedIn = ref(false);
 const userInitial = ref("");
 
-// Check localStorage for token + email
+// Check localStorage for login info
 onMounted(() => {
   const token = localStorage.getItem("token");
-  const email = localStorage.getItem("email"); // make sure email is stored during login
+  const email = localStorage.getItem("email");
   if (token) {
     isLoggedIn.value = true;
-    if (email) {
-      userInitial.value = email[0].toUpperCase();
-    } else {
-      userInitial.value = "U"; // fallback letter
-    }
+    userInitial.value = email ? email[0].toUpperCase() : "U";
   }
 });
 
-// ✅ Logout function
-function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("email");
-  localStorage.removeItem("loginTime");
-  isLoggedIn.value = false;
-  router.push("/login");
-}
+const menuOpen = ref(false);
 </script>
+
 
 
 <style scoped>
@@ -137,4 +128,5 @@ function logout() {
   border-bottom: 3px solid #4d148c;
   margin-top: 5px;
 }
+
 </style>

@@ -107,15 +107,11 @@ async function sign_in() {
     const token = response.data.token;
     const userId = response.data._id;
 
-    // Store login data
     localStorage.setItem("token", token);
     localStorage.setItem("userId", userId);
     localStorage.setItem("loginTime", Date.now());
 
-    // 👇 optional: fetch user profile if you need it
-    // await fetchUserData(token);
-
-    // Redirect to homepage
+   
     router.push("/");
   } catch (error) {
     const message = error.response?.data?.message?.toLowerCase();
@@ -132,7 +128,7 @@ async function sign_in() {
   }
 }
 
-// ------------------ Google Login Redirect ------------------
+
 const handleGoogleLogin = () => {
   window.location.href =
     "https://zacraclearningwebsite.onrender.com/api/v1/user/auth/google";
@@ -141,17 +137,17 @@ const handleGoogleLogin = () => {
 onMounted(() => {
   let token = null;
 
-  // Case 1: if backend sends ?token=xxxxx
+  
   const urlParams = new URLSearchParams(window.location.search);
   token = urlParams.get("token");
 
-  // Case 2: if backend sends /token=xxxxx
+  
   if (!token && window.location.pathname.startsWith("/token=")) {
     token = window.location.pathname.split("=")[1];
   }
 
   if (token) {
-    // Save to localStorage
+    
     localStorage.setItem("token", token);
     localStorage.setItem("loginTime", Date.now());
 

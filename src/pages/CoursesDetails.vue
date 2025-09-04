@@ -32,19 +32,23 @@
              <div class="flex flex-wrap gap-2 mt-5">
   
   <div
-    class="bg-white rounded-full py-1 px-3 flex items-center gap-2 font-semibold"
+    class="bg-white rounded-full py-1 px-3 flex items-center gap-2 font-semibold
+    transition-transform transform hover:-translate-y-1 hover:shadow-md
+"
   >
     <img
       src="@/assets/ph--chalkboard-teacher-light.svg"
       class="h-5 w-5"
       alt="Instructor Lead"
     />
-    <p class="text-sm sm:text-base">Instructor lead course</p>
+    <p class="text-sm sm:text-base ">Instructor lead course</p>
   </div>
 
   
   <div
-    class="bg-white rounded-full py-1 px-4 flex items-center gap-2 font-semibold"
+    class="bg-white rounded-full py-1 px-4 flex items-center gap-2 font-semibold
+    transition-transform transform hover:-translate-y-1 hover:shadow-md
+"
   >
     <img
       src="@/assets/material-symbols--timer-outline-rounded.svg"
@@ -55,21 +59,37 @@
       {{ course.duration }}
     </p>
   </div>
+
+   <div
+    class="bg-white rounded-full py-1 px-4 flex items-center gap-2 font-semibold
+    transition-transform transform hover:-translate-y-1 hover:shadow-md
+"
+  >
+    <img
+      src="@/assets/icons8-pricing-68.png"
+      class="h-6 w-6 sm:h-[30px] sm:w-[33px]"
+      alt="Duration"
+    />
+    <p class="text-sm sm:text-base truncate w-[80px] sm:w-[80px]">
+      ₦{{ course.price }}
+    </p>
+  </div>
 </div>
 
-            <div class="mt-5 flex flex-col md:flex-row flex-wrap items-center gap-3 bg-white p-3 rounded">
+            <div class="mt-5 flex flex-col mt-10 md:flex-row flex-wrap items-center gap-3 bg-white p-3 rounded transition-transform transform hover:-translate-y-1 hover:shadow-md
+">
   
   
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 ">
     <img src="@/assets/icons8-signal-16.png" alt="Beginner" class="w-5 h-5 object-contain" />
-    <p class="text-sm md:text-base truncate">Beginner and Intermediate</p>
+    <p class="text-sm md:text-base truncate ">Beginner and Intermediate</p>
   </div>
 
  
-  <p class="hidden md:block text-gray-500">&</p>
+  <p class="hidden md:block text-gray-500">&</p>  
 
   
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 ">
     <img src="@/assets/icons8-signal-25.png" alt="Experienced" class="w-5 h-5 object-contain" />
     <p class="text-sm md:text-base truncate">Experienced</p>
   </div>
@@ -82,7 +102,8 @@
 
 </div>
 
-  <div class="bg-white mt-10 p-[15px] rounded-[15px]">
+  <div class="bg-white mt-10 p-[15px] rounded-[15px] transition-transform transform hover:-translate-y-1 hover:shadow-md
+">
     <p class="text-[13px] opacity-[0.8]">Course Duration</p>
 
     <p class="font-[550] mt-[5px]">{{ course.duration }} of instructor-led classes</p>
@@ -92,7 +113,7 @@
 
             </div>
           </div>
-          <div class="md:w-5/12 w-full bg-white rounded-[15px] flex flex-col items-center p-4 gap-4">
+          <div class="md:w-5/12 w-full bg-white rounded-[15px] flex flex-col items-center p-4 gap-4 ">
   
   <div class="w-full">
     <iframe
@@ -106,76 +127,82 @@
   </div>
 
   
-  <div
-    class="w-full flex flex-col items-center justify-center border border-purple-700 rounded-2xl p-4"
+<div
+  class="w-[80%] flex flex-col items-center justify-center border border-purple-700 rounded-2xl p-4"
+>
+  <p class="text-sm mb-2 text-center">
+    Program fee payment can be in installments
+  </p>
+  <button 
+    class="enrollbutton w-full md:w-auto px-6 py-2 rounded-lg transition-transform transform hover:-translate-y-1 hover:shadow-md"
+    :class="nav === 'costs' ? 'active-class' : ''"
+    @click="scrollToSection('costs')"
   >
-    <p class="text-sm mb-2 text-center">
-      Program fee payment can be in installments
-    </p>
-    <button class="enrollbutton">Enroll Now</button>
-  </div>
+    Enroll Now
+  </button>
+</div>
+
 </div>
 
         </div>
       </div>
     </section>
 
-   <section class="ml-[80px] hidden lg:flex md:flex-row md:flex-wrap">
-    <div
-      class="opacity-[0.8] flex bg-gray-200 gap-[10px] w-3/4 rounded-[50px] p-[5px]"
+  <section class="ml-[80px] hidden lg:flex md:flex-row md:flex-wrap">
+  <div
+    class="opacity-[0.8] flex bg-gray-200 gap-[10px] w-11/12 rounded-[50px] p-[15px]"
+  >
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'description' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('description')"
     >
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'description' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('description')"
-      >
-        Course Description
-      </button>
+      Course Description
+    </button>
 
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'curriculum' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('curriculum')"
+    >
+      Curriculum
+    </button>
 
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'curriculum' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('curriculum')"
-      >
-        Curriculum
-      </button>
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'instructors' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('instructors')"
+    >
+      Course Instructors
+    </button>
 
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'instructors' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('instructors')"
-      >
-        Course Instructors
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'jobs' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('jobs')"
+    >
+      Job Opportunities
+    </button>
 
-        
-      </button>
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'reviews' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('reviews')"
+    >
+      Reviews
+    </button>
 
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'jobs' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('jobs')"
-      >
-        Job Opportunities
-      </button>
-
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'reviews' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('reviews')"
-      >
-        Reviews
-      </button>
-
-      <button
-        class="shortcut w-[170px] rounded-[30px] p-2"
-        :class="nav === 'costs' ? 'border-2 border-purple-600 bg-white' : ''"
-        @click="scrollToSection('costs')"
-      >
+    <button
+      class="shortcut flex-1 rounded-[30px] p-2"
+      :class="nav === 'costs' ? 'bg-[#4D148C] text-white' : ''"
+      @click="scrollToSection('costs')"
+    >
       Cost & Payment Plan
-      </button>
-    </div>
-  </section>
+    </button>
+  </div>
+</section>
+
+
 
     <section class="mt-[40px] w-[90%] ">
       <div class="ml-[80px]" >
@@ -229,20 +256,28 @@
 </div>
 
 
-        <div  id="jobs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
-          <h1 class="font-[800] text-[30px] m-[10px]">Job Opportunities</h1>
+     <div  
+  id="jobs" 
+  class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]"
+>
+  <h1 class="font-[800] text-[30px] m-[10px]">Job Opportunities</h1>
 
-          <div v-if="jobOpportunities.length" class="flex flex-wrap gap-4">
-          <div
-          v-for="(job, index) in jobOpportunities"
-         :key="index"
-         class="flex items-center gap-3 border rounded-[10px] h-[60px] px-4 bg-white shadow-sm w-fit"
-  >
-    <img src="@/assets/icons8-target-48.png" class="w-[30px] h-[30px]" />
-   <p class="font-[600] text-[18px]"> {{ job }}</p>
+  <div v-if="jobOpportunities.length" class="flex flex-wrap gap-4">
+    <a
+      v-for="(job, index) in jobOpportunities"
+      :key="index"
+      :href="`https://www.google.com/search?q=${encodeURIComponent(job)}`"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center gap-3 border rounded-[10px] h-[60px] px-4 bg-white shadow-sm w-fit 
+             transition-transform transform hover:-translate-y-1 hover:shadow-md"
+    >
+      <img src="@/assets/icons8-target-48.png" class="w-[30px] h-[30px]" />
+      <p class="font-[600] text-[18px]">{{ job }}</p>
+    </a>
   </div>
 </div>
-        </div>
+
 
         <div
         id="reviews"
@@ -400,7 +435,77 @@
         <div  id="costs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
           <h1 class="font-[800] text-[30px]">Cost and Payment Plan</h1>
 
-        </div>
+         <div class="mt-10 flex justify-center items-center gap-10 flex-wrap">
+
+  <!-- Card 1 -->
+  <div
+    class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
+  >
+    <div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Pay In Installments</h3>
+      <p class="text-gray-600">Split your payment into 2 easy installments</p>
+    </div>
+
+    <div class="mt-4">
+      <ul class="space-y-3">
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Do ABC</p>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Complete XYZ</p>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Finish 123</p>
+        </li>
+      </ul>
+    </div>
+
+    <button
+      class="mt-6 px-6 py-3 rounded-xl border-2 border-[#4d148c] text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:text-purple-700 hover:shadow-lg"
+    >
+      Pay now ?
+    </button>
+  </div>
+
+  <!-- Card 2 -->
+  <div
+    class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
+  >
+    <div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Pay Full Price</h3>
+      <p class="text-gray-600">One-time payment for the full course</p>
+    </div>
+
+    <div class="mt-4">
+      <ul class="space-y-3">
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Do ABC</p>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Complete XYZ</p>
+        </li>
+        <li class="flex items-center gap-3">
+          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
+          <p class="text-gray-700 font-medium">Finish 123</p>
+        </li>
+      </ul>
+    </div>
+
+    <button
+      class="mt-6 px-6 py-3 rounded-xl border-2 border-purple-100 text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:text-purple-700 hover:shadow-lg"
+    >
+      Pay now ?
+    </button>
+  </div>
+</div>
+
+
+</div>
 
       </div>
     </section>
@@ -478,7 +583,7 @@
     </div>
   </template>
 
- <script setup>
+<script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted, nextTick, computed } from "vue";
 import axios from "axios";
@@ -529,7 +634,7 @@ const showLess = () => {
 
 
 
-  const submitReview = async () => {
+const submitReview = async () => {
   console.log("submitReview called");
 
   errorMsg.value = "";
@@ -604,12 +709,13 @@ const scrollToSection = async (id) => {
     });
   }
 };
+
 const toggleLike = async (rev) => {
-  const token = localStorage.getItem("token"); 
-  const userId = localStorage.getItem("userId"); 
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   if (!token || !userId) {
-    alert("You need to log in to like reviews"); 
+    alert("You need to log in to like reviews");
     return;
   }
 
@@ -619,22 +725,28 @@ const toggleLike = async (rev) => {
 
   try {
     const response = await axios.post(
-      `https://zacraclearningwebsite.onrender.com/review/${rev._id}/like`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` } }
+      `https://zacraclearningwebsite.onrender.com/review/like-review`,
+      null,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { userId, reviewId: rev._id },
+      }
     );
+
+    console.log("Like response:", response.data);
 
     
     if (response.data.review) {
-      rev.likesCount = response.data.review.likes.length;
-      rev.likedByCurrentUser = response.data.review.likes.includes(userId);
+      rev.likesCount = response.data.review.likes?.length || rev.likesCount;
+      rev.likedByCurrentUser = response.data.review.likes?.includes(userId) || rev.likedByCurrentUser;
     }
 
+    
   } catch (e) {
-   
+    
     rev.likedByCurrentUser = !rev.likedByCurrentUser;
     rev.likesCount += rev.likedByCurrentUser ? 1 : -1;
-    console.error("Failed to like review", e);
+    console.error("Failed to like review:", e.response?.data || e.message);
   }
 };
 
@@ -647,11 +759,11 @@ onMounted(async () => {
     course.value = response.data.course;
     jobOpportunities.value = response.data.jobOpportunities;
 
-   reviews.value = (response.data.reviews || []).map(rev => ({
-  ...rev,
-  likedByCurrentUser: rev.likes?.includes(currentUserId.value) || false,
-  likesCount: rev.likes?.length || 0,
-}));
+    reviews.value = (response.data.reviews || []).map(rev => ({
+      ...rev,
+      likedByCurrentUser: rev.likes?.includes(currentUserId.value) || false,
+      likesCount: rev.likes?.length || 0,
+    }));
 
   } catch (error) {
     console.error("Error fetching by Id:", error);
@@ -660,6 +772,7 @@ onMounted(async () => {
   }
 });
 </script>
+
 
 
 

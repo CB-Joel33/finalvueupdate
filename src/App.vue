@@ -32,5 +32,10 @@ function goToDepartment(dept) {
 </script>
 
 <style>
+ html, body, #app {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
 </style>

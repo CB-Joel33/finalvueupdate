@@ -1,17 +1,20 @@
 <template>
-  <section class="container mx-auto py-16 px-6 text-center mt-17 font-poppins">
-    <h2 class="text-4xl font-bold mb-6 font-abel">We Always Make The Best</h2>
-    <p class="text-gray-600 max-w-2xl mx-auto mb-8">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Mauris vel lacus sit amet arcu volutpat bibendum. 
-      Donec vel sapien sit amet ipsum dignissim euismod.
-    </p>
-    <RouterLink 
-      to="/contact" 
-      class="bg-[#4D148C] text-white px-6 py-3 rounded-lg shadow-lg hover:opacity-90 font-poppins font-semibold"
-    >
-      Contact Us
-    </RouterLink>
+  <section class="container mx-auto py-16 px-6 max-w-5xl mt-17 font-poppins">
+    <h2 class="text-4xl font-bold text-center mb-10 font-abel">What Our Clients Say</h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div v-for="(testimonial, index) in testimonials" :key="index"
+        class="bg-white shadow-lg rounded-2xl p-6 border border-gray-100">
+        <p class="text-gray-600 mb-4 font-poppins">"{{ testimonial.message }}"</p>
+        <div class="flex items-center space-x-4">
+          <img :src="testimonial.image" alt="client" class="rounded-full w-12 h-12"/>
+          <div>
+            <p class="font-semibold font-poppins">{{ testimonial.name }}</p>
+            <p class="text-sm text-gray-500 font-poppins">{{ testimonial.role }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="bg-[#131313] text-white pt-10 pb-10 px-6 md:px-16 mt-8 font-poppins">
@@ -22,18 +25,14 @@
         <router-link to="/">
           <img src="@/assets/Logo (1).png" class="w-40 md:w-48" />
         </router-link>
-        <p class="font-abel text-2xl md:text-3xl">
-          Africa’s No. 1 Data<br />School
-        </p>
+        <p class="font-abel text-2xl md:text-3xl">Africa’s No. 1 Data<br> School</p>
         <div class="flex -mx-2 items-center">
           <img src="@/assets/Frame 58.png" class="-mr-6" />
           <img src="@/assets/Frame 59.png" class="-mr-6" />
           <img src="@/assets/Frame 60.png" class="-mr-6" />
           <img src="@/assets/Frame 61.png" class="-mr-6" />
         </div>
-        <p class="font-matter text-xs opacity-70">
-          © Copyright 2025 All Rights Reserved
-        </p>
+        <p class="font-matter text-xs opacity-70">© Copyright 2025 All Rights Reserved</p>
       </div>
 
       <!-- Links Grid -->
@@ -75,18 +74,11 @@
       <!-- Visit & Newsletter -->
       <div class="flex flex-col gap-4">
         <p class="font-bold font-poppins">Visit Us</p>
-        <p class="text-xs font-poppins">
-          2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo State, Nigeria.
-        </p>
-        <p class="text-xs font-poppins">
-          Be the first to know about our exciting offers on Data Science, AI, and ML courses.
-        </p>
+        <p class="text-xs font-poppins">2nd Floor, Sovereign Trust Insurance Building, Alagbaka, Akure, Ondo State, Nigeria.</p>
+        <p class="text-xs font-poppins">Be the first to know about our exciting offers on Data Science, AI, and ML courses.</p>
         <div class="flex items-center gap-2">
-          <input 
-            type="email" 
-            placeholder="Type email Here..."
-            class="bg-black text-white text-xs border-b-2 border-[#333385] h-8 w-40 px-2 focus:outline-none font-poppins" 
-          />
+          <input type="email" placeholder="Type email Here..."
+            class="bg-black text-white text-xs border-b-2 border-[#333385] h-8 w-40 px-2 focus:outline-none font-poppins" />
           <img src="@/assets/Frame 527.png" class="h-8 w-8 object-contain" />
         </div>
       </div>
@@ -96,7 +88,26 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+const testimonials = [
+  {
+    name: "James Rhine",
+    role: "Product Manager",
+    message: "Amazing experience working with this company!",
+    image: "https://via.placeholder.com/50"
+  },
+  {
+    name: "Douglas Warden",
+    role: "Web Developer",
+    message: "i really learnt a lot in zacrac.",
+    image: "https://via.placeholder.com/50"
+  },
+  {
+    name: "Lorenzo Carl",
+    role: "Designer",
+    message: "something ",
+    image: "https://via.placeholder.com/50"
+  }
+];
 </script>
 
 <style scoped>

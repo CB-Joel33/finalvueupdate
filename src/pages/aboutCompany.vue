@@ -1,17 +1,22 @@
 <template>
-  <section class="container mx-auto py-16 px-6 text-center mt-17 font-poppins">
-    <h2 class="text-4xl font-bold mb-6 font-abel">We Always Make The Best</h2>
-    <p class="text-gray-600 max-w-2xl mx-auto mb-8">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Mauris vel lacus sit amet arcu volutpat bibendum. 
-      Donec vel sapien sit amet ipsum dignissim euismod.
-    </p>
-    <RouterLink 
-      to="/contact" 
-      class="bg-[#4D148C] text-white px-6 py-3 rounded-lg shadow-lg hover:opacity-90 font-poppins font-semibold"
-    >
-      Contact Us
-    </RouterLink>
+  <section class="container mx-auto py-16 px-6 mt-17 font-poppins">
+    <h2 class="text-4xl font-bold mb-8 text-center font-abel">About Zacrac Learning</h2>
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <img src="https://via.placeholder.com/500x300" alt="Company" class="rounded-2xl shadow-lg" />
+      <div>
+        <p class="text-gray-600 mb-4">
+          Our company is built on trust, innovation, and excellence. 
+          We specialize in delivering top-notch services tailored to your needs.
+        </p>
+        <p class="text-gray-600 mb-4">
+          From startups to enterprises, we help businesses grow with cutting-edge 
+          solutions and a passionate team.
+        </p>
+        <RouterLink to="/contact" class="bg-[#4D148C] text-white px-6 py-3 rounded-lg shadow-lg hover:opacity-90 font-poppins font-semibold">
+          Work With Us
+        </RouterLink>
+      </div>
+    </div>
   </section>
 
   <footer class="bg-[#131313] text-white pt-10 pb-10 px-6 md:px-16 mt-8 font-poppins">

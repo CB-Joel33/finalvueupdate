@@ -64,7 +64,7 @@
     <p class="text-[#000066] font-bold text-2xl md:text-3xl m-0">
       Course Catalog
     </p>
-    <img src="@/assets/Group (1).png" alt="" class="w-24 md:w-28 hidden md:flex h-auto md:mr-24 mt-4 md:mt-0" />
+    <img src="@/assets/Group (1).png" alt="" class="w-24 md:w-28 hidden md:flex h-[75px] md:mr-24 mt-4 md:mt-0" />
   </div>
 
   
@@ -78,61 +78,105 @@
 
 <div class="w-11/12 md:w-4/5 mx-auto mt-5">
   <div ref="filterSection" class="flex flex-wrap gap-4 justify-start">
-    
-    <button class="buttonfilter px-4 py-2 min-w-[120px]" @click="setDepartment('All')"><p>All</p></button>
-    <button class="buttonfilter px-4 py-2 min-w-[120px]" @click="setDepartment('Data')"><p>Data</p></button>
-    <button class="buttonfilter px-4 py-2 min-w-[140px]" @click="setDepartment('Product Design')"><p>Product Design</p></button>
-    <button class="buttonfilter px-4 py-2 min-w-[140px]" @click="setDepartment('Cybersecurity')"><p>Cybersecurity</p></button>
-    <button class="buttonfilter px-4 py-2 min-w-[160px]" @click="setDepartment('Project Management')"><p>Project Management</p></button>
-    <button class="buttonfilter px-4 py-2 min-w-[160px]" @click="setDepartment('Software Development')"><p>Software Development</p></button>
-    
+
+    <button 
+  class="buttonfilter px-4 py-2 min-w-[120px]"
+  @click="setDepartment('All')"
+  :style="selectedDepartment === 'All' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  All
+</button>
+
+<button 
+  class="buttonfilter px-4 py-2 min-w-[120px]"
+  @click="setDepartment('Data')"
+  :style="selectedDepartment === 'Data' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  Data
+</button>
+
+<button 
+  class="buttonfilter px-4 py-2 min-w-[140px]"
+  @click="setDepartment('Product Design')"
+  :style="selectedDepartment === 'Product Design' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  Product Design
+</button>
+
+<button 
+  class="buttonfilter px-4 py-2 min-w-[140px]"
+  @click="setDepartment('Cybersecurity')"
+  :style="selectedDepartment === 'Cybersecurity' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  Cybersecurity
+</button>
+
+<button 
+  class="buttonfilter px-4 py-2 min-w-[160px]"
+  @click="setDepartment('Project Management')"
+  :style="selectedDepartment === 'Project Management' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  Project Management
+</button>
+
+<button 
+  class="buttonfilter px-4 py-2 min-w-[160px]"
+  @click="setDepartment('Software Development')"
+  :style="selectedDepartment === 'Software Development' ? { backgroundColor: '#4D148C', color: 'white' } : { backgroundColor: 'white', color: 'black' }"
+>
+  Software Development
+</button>
+</div></div>
+
+
+
+
+
+
+ <div class="w-11/12 md:w-4/5 mx-auto mt-5" ref="coursesSection">
+  
+  <!-- Loader replaces courses while fetching -->
+  <div v-if="loading || filterLoader" class="flex justify-center items-center py-20">
+    <div class="w-12 h-12 border-4 border-[#4D148C] border-t-transparent rounded-full animate-spin"></div>
   </div>
-</div>
 
-
-
-
-  <div class="w-11/12 md:w-4/5 mx-auto mt-5" ref="coursesSection">
-  <div v-if="courses && courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-    
+  <!-- Show courses if available -->
+  <div v-else-if="courses && courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
     <div v-for="course in courses" :key="course._id" class="coursecards bg-white shadow-md rounded-lg overflow-hidden mb-5 px-3">
       
-     
       <div class="h-64 w-full overflow-hidden">
         <img :src="course.imageUrl" alt="" class="w-full h-full object-cover">
       </div>
-      
-      
+
       <div class="p-4">
-        
         <p class="font-bold font-poppins text-base mb-2">{{ course.title }}</p>
-        
-       
+
         <div class="flex items-center gap-2 mb-3">
           <img src="@/assets/Frame 85.png" alt="" class="w-8 h-4">
           <h6 class="text-xs text-gray-600 m-0">{{ course.numberOfEnrolled }} people enrolled</h6>
         </div>
-        
-        
+
         <div class="text-sm mb-3">
           <div>Mode: On-Site/Remote</div>
           <div>Duration: {{ course.duration }}</div>
           <div>Payment Type: Full/Installment</div>
         </div>
-        
-        
+
         <p class="font-bold text-sm mb-4">{{ formatPrice(course.price) }}</p>
-        
-        
+
         <router-link :to="`/allCourses/${course._id}`" class="viewbutton inline-block">
           <p class="text-center">Preview Course</p>
         </router-link>
       </div>
     </div>
-    
   </div>
 
- 
+  <!-- If no courses after filtering -->
+  <div v-else class="text-center text-gray-600 py-10">
+    No courses available.
+  </div>
+
+  <!-- Keep pagination -->
   <Pagination
     :current-page="page"
     :total-pages="totalPages"
@@ -143,6 +187,7 @@
     class="mt-6"
   />
 </div>
+
 
 
     
@@ -190,69 +235,65 @@
     </div>
 
    
-    <div class="w-11/12 mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="w-11/12 mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px] relative">
 
-  <div class="reviewcards" style="background-color: #DBDBDB">
-    <div class="card-content">
-      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
-
-      <div style="text-align: center;">
-        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
-
-        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-        </div>
+  <!-- Review Card 1 -->
+  <div class="reviewcards bg-gray-300 p-4 rounded-lg shadow-md relative z-0">
+    <div class="card-content text-center">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" class="mx-auto mb-4" />
+      <p class="font-semibold mb-1">Adebayo Mattews</p>
+      <p class="text-sm text-gray-700 mb-2 font-montserrat">Product Design</p>
+      <div class="flex items-center justify-center mb-3">
+        <div class="text-green-600 text-lg leading-none">★★★★★</div>
+        <span class="ml-2 text-xs text-gray-600">4.23 rating</span>
       </div>
-
-      <h6 style=" margin-top: 8px; margin-bottom: 0;">
-        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      <h6 class="text-sm leading-relaxed">
+        All membership packages come with a 30-day satisfaction guarantee.
+        If you didn’t mean to set your password, just ignore this email
+        and we’ll forget this ever happened.
       </h6>
     </div>
   </div>
 
-  <div class="reviewcards shadow-lg" style="height: 310px; margin-top: -20px">
-    <div class="card-content">
-      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
-
-      <div style="text-align: center;">
-        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
-
-        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-        </div>
+  <!-- Review Card 2 (on top) -->
+  <div class="reviewcards bg-white p-4 rounded-lg shadow-xl relative z-20">
+    <div class="card-content text-center">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" class="mx-auto mb-4" />
+      <p class="font-semibold mb-1">Adebayo Mattews</p>
+      <p class="text-sm text-gray-700 mb-2 font-montserrat">Product Design</p>
+      <div class="flex items-center justify-center mb-3">
+        <div class="text-green-600 text-lg leading-none">★★★★★</div>
+        <span class="ml-2 text-xs text-gray-600">4.23 rating</span>
       </div>
-
-      <h6 style=" margin-top: 8px; margin-bottom: 0;">
-        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      <h6 class="text-sm leading-relaxed">
+        All membership packages come with a 30-day satisfaction guarantee.
+        If you didn’t mean to set your password, just ignore this email
+        and we’ll forget this ever happened.
       </h6>
     </div>
   </div>
 
-  <div class="reviewcards" style="background-color: #DBDBDB">
-    <div class="card-content">
-      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" style="margin-bottom: 15px;" />
-
-      <div style="text-align: center;">
-        <p style="font-weight: 550; margin: 2px 0;">Adebayo Mattews</p>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; margin: 2px 0;">Product Design</p>
-
-        <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-          <div style="color: #158D30; font-size: 18px; line-height: 1;">★★★★★</div>
-          <span style="margin-left: 6px; font-size: 10px; color: #555;">4.23 rating</span>
-        </div>
+  <!-- Review Card 3 -->
+  <div class="reviewcards bg-gray-300 p-4 rounded-lg shadow-md relative z-0">
+    <div class="card-content text-center">
+      <img src="@/assets/Rectangle 24140.png" alt="Reviewer Photo" class="mx-auto mb-4" />
+      <p class="font-semibold mb-1">Adebayo Mattews</p>
+      <p class="text-sm text-gray-700 mb-2 font-montserrat">Product Design</p>
+      <div class="flex items-center justify-center mb-3">
+        <div class="text-green-600 text-lg leading-none">★★★★★</div>
+        <span class="ml-2 text-xs text-gray-600">4.23 rating</span>
       </div>
-
-      <h6 style=" margin-top: 8px; margin-bottom: 0;">
-        All membership packages come with a 30-day satisfaction guarantee. If you didn’t mean to set your password, just ignore this email and we’ll forget this ever happened.
+      <h6 class="text-sm leading-relaxed">
+        All membership packages come with a 30-day satisfaction guarantee.
+        If you didn’t mean to set your password, just ignore this email
+        and we’ll forget this ever happened.
       </h6>
     </div>
   </div>
 
 </div>
+
+
 
   </div>
 </section>
@@ -330,18 +371,16 @@
   
 </template>
 
-
 <script setup>
 import Dropdown from '@/components/Dropdown.vue'
 import AboutDropdown from '@/components/aboutDropdown.vue'
-import { ref, onMounted,  watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import axios from 'axios'
 import Pagination from '@/components/Pagination.vue'
 import { useRoute } from "vue-router"
-import { nextTick } from "vue"
 
-const loading = ref(false)
-
+const loading = ref(false)       // for global content loading (pagination, page load, etc.)
+const filterLoader = ref(false)  // for filter button loading
 
 const courses = ref([])
 const page = ref(1)
@@ -350,31 +389,34 @@ const selectedDepartment = ref('All')
 const filterSection = ref(null)
 const coursesSection = ref(null)
 
-
 const route = useRoute()
 
-async function fetchCourses() {
-  loading.value = true
+async function fetchCourses(isFilter = false) {
+  if (isFilter) {
+    filterLoader.value = true
+  } else {
+    loading.value = true
+  }
+
   try {
-   
     let url = `https://zacraclearningwebsite.onrender.com/courses?page=${page.value}&limit=9`
 
- 
     if (selectedDepartment.value !== 'All') {
       url += `&department=${encodeURIComponent(selectedDepartment.value)}`
     }
 
-   
     const response = await axios.get(url)
 
     courses.value = response.data.listOfCourses
     totalPages.value = response.data.pagination.totalPages
-  }
-   catch (error) {
+  } catch (error) {
     console.error('Error fetching courses:', error)
-
   } finally {
-    loading.value = false
+    if (isFilter) {
+      filterLoader.value = false
+    } else {
+      loading.value = false
+    }
   }
 }
 
@@ -387,30 +429,25 @@ function formatPrice(price) {
 
 function handlePageChange(newPage) {
   page.value = newPage
-  fetchCourses()
+  fetchCourses(false) // normal pagination, no filter
 }
 
 function setDepartment(dept) {
   selectedDepartment.value = dept
   page.value = 1
-   console.log("Selected:", dept)
-  fetchCourses()
+  console.log("Selected:", dept)
+  fetchCourses(true) // call with filter loader
 }
 
 onMounted(() => {
-  fetchCourses()
+  fetchCourses(false)
 })
-
-
 
 async function scrollAndFilter(dept) {
   setDepartment(dept)
-
   await nextTick()
 
-
   filterSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
-
 
   setTimeout(() => {
     coursesSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -420,12 +457,9 @@ async function scrollAndFilter(dept) {
 watch(() => route.query.dept, (newDept) => {
   if (newDept) scrollAndFilter(newDept)
 })
-
-
-watch(() => route.query.dept, (newDept) => {
-  if (newDept) scrollAndFilter(newDept)
-})
 </script>
+
+
 
 
 

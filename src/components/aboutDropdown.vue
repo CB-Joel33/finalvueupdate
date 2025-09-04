@@ -1,40 +1,23 @@
 <template>
-  <div style="position: relative;" @mouseleave="isOpen = false">
-    <div @click="toggleDropdown" style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
-      <p style="margin: 0; font-size: 14px;" class="topnav">About ▾</p>
+  <div ref="dropdownRef" class="relative">
+    <!-- Dropdown trigger -->
+    <div @click="toggleDropdown" class="cursor-pointer flex items-center gap-1">
+      <p class="text-gray-700 font-semibold">About ▾</p>
     </div>
 
-      <div
+    <!-- Dropdown menu -->
+    <div
       v-if="isOpen"
-      style="
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-top: 12px;
-        background-color: white;  
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        padding: 20px 0;
-        width: 240px;
-        z-index: 100;
-      "
+      class="absolute top-full mt-2 bg-white rounded-lg shadow-lg w-56 z-50"
     >
-      <ul style="list-style: none; margin: 0; padding: 0;">
+      <ul class="flex flex-col p-2">
         <li
           v-for="(item, index) in about"
           :key="index"
-          style="
-            padding: 14px 24px;
-            font-size: 18px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s ease;
-          "
-          @mouseover="hovered = index"
-          @mouseleave="hovered = null"
-          :style="{ backgroundColor: hovered === index ? '#f9f9f9' : 'transparent' }"
+          @click="navigateTo(item.route)"
+          class="px-4 py-2 rounded hover:bg-[#f3e5ff] cursor-pointer font-medium"
         >
-          {{ item }}
+          {{ item.label }}
         </li>
       </ul>
     </div>
@@ -42,17 +25,41 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 
-const isOpen = ref(false)
-
-function toggleDropdown() {
-  isOpen.value = !isOpen.value
-}
+const router = useRouter();
+const isOpen = ref(false);
+const dropdownRef = ref(null);
 
 const about = [
-  
-  'About Zacrac',
-  'About Us'
-]
+  { label: "About Zacrac", route: "/aboutcompany" },
+  { label: "About Us", route: "/aboutus" },
+];
+
+// Toggle dropdown visibility
+function toggleDropdown() {
+  isOpen.value = !isOpen.value;
+}
+
+// Navigate to route
+function navigateTo(route) {
+  isOpen.value = false;
+  router.push(route);
+}
+
+// Close dropdown if clicked outside
+function handleClickOutside(event) {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+    isOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>

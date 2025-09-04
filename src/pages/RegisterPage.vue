@@ -96,6 +96,7 @@ const registerForm = ref({
   password: "",
   repassword: "",
 })
+
 onMounted(() => {
   
   loading.value = false
@@ -120,7 +121,7 @@ async function sign_up() {
     })
 
     console.log(data)
-    localStorage.setItem("registered_email", registerForm.value.email)
+    localStorage.setItem("registered email", registerForm.value.email)
     router.push('/otp-verification')
 
   } catch (error) {

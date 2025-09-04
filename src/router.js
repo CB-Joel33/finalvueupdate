@@ -8,6 +8,10 @@ import ForgotPassword from "@/pages/ForgotPassword.vue";
 import AllCourses from "@/pages/AllCourses.vue";
 import CoursesDetails from "@/pages/CoursesDetails.vue";
 import ResetPassword from "@/pages/ResetPassword.vue";
+import TestimonialPage from "@/pages/Testimonial.vue";
+import AboutUsPage from "@/pages/aboutUs.vue";
+import CompanyPage from "@/pages/aboutCompany.vue";
+import ContactPage from "@/pages/contactUs.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -15,10 +19,13 @@ const routes = [
   { path: "/register", name: "Register", component: RegisterPage },
   { path: "/otp-verification", name: "OTPverification", component: OTPverification },
   { path: "/forgot-password", name: "ForgotPassword", component: ForgotPassword },
-  { path: "/reset-password/:token", component: ResetPassword },
   { path: "/resetpassword/:token", component: ResetPassword },
   { path: "/allCourses", name: "AllCourses", component: AllCourses },
   { path: "/allCourses/:id", name: "CoursesDetail", component: CoursesDetails },
+    { path: "/testimonials", component: TestimonialPage },
+  { path: "/aboutus", component: AboutUsPage },
+  { path: "/aboutcompany", component: CompanyPage },
+  { path: "/contact", component: ContactPage },
 
   
    {
