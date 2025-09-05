@@ -20,7 +20,7 @@ const routes = [
   { path: "/register", name: "Register", component: RegisterPage },
   { path: "/otp-verification", name: "OTPverification", component: OTPverification },
   { path: "/forgot-password", name: "ForgotPassword", component: ForgotPassword },
-  { path: "/resetpassword/:token", component: ResetPassword },
+  { path: "/resetpassword", component: ResetPassword },
   { path: "/allCourses", name: "AllCourses", component: AllCourses },
   { path: "/allCourses/:id", name: "CoursesDetail", component: CoursesDetails },
     { path: "/testimonials", component: TestimonialPage },
