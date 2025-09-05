@@ -450,15 +450,15 @@
       <ul class="space-y-3">
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Do ABC</p>
+          <p class="text-gray-700 font-medium">Pay 70% upfront to get started</p>
         </li>
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Complete XYZ</p>
+          <p class="text-gray-700 font-medium">Access your courses right away</p>
         </li>
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Finish 123</p>
+          <p class="text-gray-700 font-medium">Settle the remaining 30% later with ease</p>
         </li>
       </ul>
     </div>
@@ -483,15 +483,15 @@
       <ul class="space-y-3">
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Do ABC</p>
+          <p class="text-gray-700 font-medium">Pay 100% upfront in a single transaction</p>
         </li>
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Complete XYZ</p>
+          <p class="text-gray-700 font-medium">Get instant access to the course</p>
         </li>
         <li class="flex items-center gap-3">
           <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Finish 123</p>
+          <p class="text-gray-700 font-medium">You’re all set</p>
         </li>
       </ul>
     </div>

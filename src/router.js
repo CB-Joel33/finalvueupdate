@@ -12,6 +12,7 @@ import TestimonialPage from "@/pages/Testimonial.vue";
 import AboutUsPage from "@/pages/aboutUs.vue";
 import CompanyPage from "@/pages/aboutCompany.vue";
 import ContactPage from "@/pages/contactUs.vue";
+import profilePage from "@/pages/profilePage.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -26,6 +27,8 @@ const routes = [
   { path: "/aboutus", component: AboutUsPage },
   { path: "/aboutcompany", component: CompanyPage },
   { path: "/contact", component: ContactPage },
+    { path: "/profilepage", component: profilePage },
+
 
   
    {

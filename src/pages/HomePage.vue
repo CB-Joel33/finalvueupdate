@@ -204,14 +204,24 @@
 
    
     <h6 class="font-bold text-base md:text-lg lg:text-xl max-w-xl md:max-w-2xl mx-auto mb-6">
-      Have you already learned a Tech Skill and want to hone your skills by working on Projects with a Mentor?
+      Want to see what others are saying about Zacrac? Explore our reviews and share your own experience with the community.
     </h6>
 
     
-    <button class="flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 rounded-lg border border-black font-poppins font-medium text-sm md:text-base">
-      <span>Explore Project Build & Mentorship Program</span>
-      <img src="@/assets/send2.png" alt="Send Icon" class="w-3 h-3 md:w-4 md:h-4" />
-    </button>
+   <router-link to="/testimonials">
+  <button 
+    class="flex items-center gap-2 md:gap-3 px-4 py-2 md:px-6 md:py-3 
+           rounded-lg border border-black font-poppins font-medium 
+           text-sm md:text-base"
+  >
+    <span>Check out reviews & add yours to inspire others</span>
+    <img 
+      src="@/assets/send2.png" 
+      alt="Send Icon" 
+      class="w-3 h-3 md:w-4 md:h-4" 
+    />
+  </button>
+</router-link>
 
   </div>
 </section>

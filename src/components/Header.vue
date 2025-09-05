@@ -33,21 +33,33 @@
       <!-- Right side (Profile + Hamburger) -->
       <div class="flex items-center gap-4">
         <template v-if="isLoggedIn">
-          <div
-            class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white cursor-pointer"
-            title="My Account"
-          >
-            {{ userInitial }}
-          </div>
+          <router-link to="/profilepage">
+            <div
+              class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white cursor-pointer"
+              title="My Account"
+            >
+              {{ userInitial }}
+            </div>
+          </router-link>
         </template>
 
+        <!-- Login Button (Responsive Sizes) -->
         <router-link
           v-else
           to="/login"
-          class="purplebutton flex items-center gap-2 px-4 py-2 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
+          class="purplebutton flex items-center gap-2 
+                 px-2 py-1 text-xs        <!-- 👈 smaller button on phones -->
+                 sm:px-3 sm:py-2 sm:text-sm 
+                 md:px-5 md:py-2.5 md:text-base 
+                 lg:px-6 lg:py-3          <!-- 👈 normal big button on desktop -->
+                 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
         >
           <span>Login</span>
-          <img src="@/assets/send.png" alt="Send Icon" class="w-3 h-3" />
+          <img
+            src="@/assets/send.png"
+            alt="Send Icon"
+            class="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4"
+          />
         </router-link>
 
         <!-- Hamburger (Mobile only, beside U) -->
@@ -112,8 +124,6 @@ onMounted(() => {
 const menuOpen = ref(false);
 </script>
 
-
-
 <style scoped>
 .navbar {
   width: 100%;
@@ -128,5 +138,4 @@ const menuOpen = ref(false);
   border-bottom: 3px solid #4d148c;
   margin-top: 5px;
 }
-
 </style>
