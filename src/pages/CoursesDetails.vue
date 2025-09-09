@@ -497,7 +497,7 @@
     </div>
 
     <button
-      class="mt-6 px-6 py-3 rounded-xl border-2 border-purple-100 text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:text-purple-700 hover:shadow-lg"
+      class="mt-6 px-6 py-3 rounded-xl border-2 border-purple-100 text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:border-[#4d148c] hover:text-purple-700 hover:shadow-lg"
     >
       Pay now ?
     </button>

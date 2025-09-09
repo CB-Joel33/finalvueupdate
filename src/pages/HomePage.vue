@@ -133,7 +133,7 @@
 
 
 
- <div class="w-11/12 md:w-4/5 mx-auto mt-5" ref="coursesSection">
+ <div class="w-11/12 md:w-4/5 mx-auto mt-5 " ref="coursesSection">
   
   <!-- Loader replaces courses while fetching -->
   <div v-if="loading || filterLoader" class="flex justify-center items-center py-20">
