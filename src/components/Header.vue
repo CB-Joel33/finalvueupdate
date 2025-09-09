@@ -19,9 +19,7 @@
         >
           Testimonials
         </router-link>
-
         <AboutDropdown />
-
         <router-link
           to="/contact"
           class="text-gray-700 hover:text-[#4D148C] font-semibold"
@@ -32,27 +30,36 @@
 
       <!-- Right side (Profile + Hamburger) -->
       <div class="flex items-center gap-4">
+        <!-- Profile (When Logged In) -->
         <template v-if="isLoggedIn">
           <router-link to="/profilepage">
-            <div
-              class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white cursor-pointer"
-              title="My Account"
-            >
-              {{ userInitial }}
+            <div class="relative group">
+              <!-- Profile Circle -->
+              <div
+                class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer"
+              >
+                <img
+                  :src="userImage || defaultProfile"
+                  alt="Profile"
+                  class="w-8 h-8 rounded-full object-cover"
+                />
+              </div>
+
+              <!-- Tooltip -->
+              <div
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-md"
+              >
+                User Profile
+              </div>
             </div>
           </router-link>
         </template>
 
-        <!-- Login Button (Responsive Sizes) -->
+        <!-- Login Button -->
         <router-link
           v-else
           to="/login"
-          class="purplebutton flex items-center gap-2 
-                 px-2 py-1 text-xs        <!-- 👈 smaller button on phones -->
-                 sm:px-3 sm:py-2 sm:text-sm 
-                 md:px-5 md:py-2.5 md:text-base 
-                 lg:px-6 lg:py-3          <!-- 👈 normal big button on desktop -->
-                 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
+          class="purplebutton flex items-center gap-2 px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-5 md:py-2.5 md:text-base lg:px-6 lg:py-3 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
         >
           <span>Login</span>
           <img
@@ -62,7 +69,7 @@
           />
         </router-link>
 
-        <!-- Hamburger (Mobile only, beside U) -->
+        <!-- Hamburger (Mobile only) -->
         <button
           @click="menuOpen = !menuOpen"
           class="md:hidden flex flex-col gap-1"
@@ -86,9 +93,7 @@
       >
         Testimonials
       </router-link>
-
       <AboutDropdown />
-
       <router-link
         to="/contact"
         class="text-gray-700 hover:text-[#4D148C] font-semibold"
@@ -105,19 +110,21 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import AboutDropdown from "./aboutDropdown.vue";
 
+// import default profile image properly
+import defaultProfile from "@/assets/icons8-user-32.png";
+
 const router = useRouter();
 
 // Login state
 const isLoggedIn = ref(false);
-const userInitial = ref("");
+const userImage = ref(""); // stores user profile image URL
 
-// Check localStorage for login info
 onMounted(() => {
   const token = localStorage.getItem("token");
-  const email = localStorage.getItem("email");
+  const profilePic = localStorage.getItem("profilePic"); // optional custom pic
   if (token) {
     isLoggedIn.value = true;
-    userInitial.value = email ? email[0].toUpperCase() : "U";
+    userImage.value = profilePic || ""; // fallback handled in template
   }
 });
 
@@ -134,6 +141,7 @@ const menuOpen = ref(false);
   z-index: 100;
   position: absolute;
 }
+
 .topnav:hover {
   border-bottom: 3px solid #4d148c;
   margin-top: 5px;

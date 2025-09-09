@@ -3,27 +3,48 @@
     <div >
     
 
-      <div class="seconddiv grid grid-cols-1 md:grid-cols-2 " style="margin-top: 150px;">
-        <div style="width: 100%;">
-          <div style="margin-left: 10%; margin-top: 20%;" class="flex flex-col justify-center">
-            <h2 style="font-weight: 900; font-size: 30px;">What do you want to learn?</h2>
-            <div style="position: relative;background-color: white;width: 80%; border-radius: 10px;padding: auto; overflow: hidden;">
-              <input type="text" placeholder="Search for courses" class="searchbar" />
-              <img src="@/assets/lets-icons_search-duotone.png" style="position: absolute; left: 410px; top: 18px;" />
-            </div>
-           <div style="font-size: 14px; display: flex; align-items: center; margin-top: 7px; gap: 7px;">
-  <p style="color: #F26100; margin: 0;">Suggestion:</p>
-  <router-link to="" style="color: purple;" >UI/UX</router-link>
-  <router-link to="" style="color: purple;">Data Analysis</router-link>
+   <div class="seconddiv grid grid-cols-1 md:grid-cols-2" style="margin-top: 120px;"><!-- slightly reduced top space -->
+  <!-- Left Content -->
+  <div class="w-full">
+    <div class="flex flex-col justify-center ml-[10%] mt-[2%]"><!-- reduced top margin -->
+      
+      <!-- Big Heading -->
+      <h2
+        class="text-[#120803] font-georgia font-semibold
+               text-3xl xs:text-4xl md:text-[2rem] xl:text-[3rem]
+               leading-snug mb-1 max-w-[15ch] lg:max-w-[17ch]"
+      >
+        Shaping Tomorrow’s Tech Leaders, One Learner at a Time.
+      </h2>
+
+      <!-- Sub Heading -->
+      <p
+        class="mt-2 text-[#120803] font-poppins text-sm md:text-base 
+               max-w-[35ch] lg:max-w-[45ch] opacity-70"
+      >
+       Discover a path to hands-on tech learning designed to prepare you for real-world challenges and long-term career success.
+      </p>
+
+      <!-- View Courses Button -->
+      <div class="mt-3"><!-- tighter than mt-6 -->
+        <button
+          @click="scrollToCourses"
+          class="bg-[#4D148C] hover:bg-[#3a0f69] text-white font-poppins font-medium 
+                 px-5 py-2 rounded-lg shadow-md transition-all duration-300 text-sm md:text-base"
+        >
+          View Courses
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Image -->
+  <div class="hidden md:flex flex-col items-center md:items-end">
+    <img src="@/assets/Frame 576.png" class="mt-3" /> <!-- reduced from mt-6 -->
+  </div>
 </div>
 
-          </div>
-        </div>
 
-        <div class="md:flex flex-col items-center md:items-end hidden"> 
-          <img src="@/assets/Frame 576.png" style="margin-top: 25px; display: flex;"  />
-        </div>
-      </div>
 
       <div style="align-items: center; justify-content: center; display: flex; margin-top: 30px;">
         <img src="@/assets/Trust by 5000+ learners in 15 countries.png" />
@@ -467,6 +488,10 @@ async function scrollAndFilter(dept) {
 watch(() => route.query.dept, (newDept) => {
   if (newDept) scrollAndFilter(newDept)
 })
+
+function scrollToCourses() {
+ filterSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
+}
 </script>
 
 
