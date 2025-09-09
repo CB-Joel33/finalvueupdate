@@ -1,32 +1,61 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
-    <form @submit.prevent="handleReset" class="bg-white shadow-lg p-6 rounded w-96">
-      <h2 class="text-xl font-bold mb-4">Reset Password</h2>
+  <div class="mainbody">
+    <div class="grid grid-cols-1 md:grid-cols-2 h-screen overflow-hidden">
+      <!-- Left Section (Form) -->
+      <div>
+        <div class="ml-[30%] p-[20px] mt-[150px]">
+          <!-- Logo -->
+          <img src="@/assets/logo.png" class="mb-6" />
 
-      <div v-if="errormsg" class="text-red-500 mb-2">{{ errormsg }}</div>
-      <div v-if="successmsg" class="text-green-600 mb-2">{{ successmsg }}</div>
+          <!-- Error / Success Messages -->
+          <div v-if="errormsg" class="text-red-500 my-2">
+            {{ errormsg }}
+          </div>
+          <div v-if="successmsg" class="text-green-600 my-2">
+            {{ successmsg }}
+          </div>
 
-      <input
-        type="password"
-        v-model="newPassword"
-        placeholder="New Password"
-        class="border w-full p-2 mb-3 rounded"
-        required
-      />
+          <!-- Heading -->
+          <p class="signupbold mb-8">Reset Your Password</p>
 
-      <input
-        type="password"
-        v-model="confirmPassword"
-        placeholder="Confirm Password"
-        class="border w-full p-2 mb-3 rounded"
-        required
-      />
+          <!-- Form -->
+          <div class="inputwrapper">
+            <form @submit.prevent="handleReset">
+              <input
+                type="password"
+                v-model="newPassword"
+                placeholder="New Password"
+                class="forms"
+                required
+              />
 
-      <button type="submit" class="signbutton w-full" :disabled="loader">
-        <span v-if="!loader">Reset Password</span>
-        <span v-else>Processing...</span>
-      </button>
-    </form>
+              <input
+                type="password"
+                v-model="confirmPassword"
+                placeholder="Confirm Password"
+                class="forms"
+                required
+              />
+
+              <div class="mt-6 flex justify-between items-center">
+                <button class="signbutton" type="submit" :disabled="loader">
+                  <span v-if="!loader">Reset Password</span>
+                  <span v-else>Processing...</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Section (Image) -->
+      <div>
+        <img
+          src="@/assets/Group 36307.png"
+          class="hidden md:flex absolute top-0 right-0 h-screen w-2/5"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,19 +79,18 @@ const handleReset = async () => {
   successmsg.value = ""
 
   try {
-    const token = route.params.token 
+    const token = route.params.token
 
     const res = await axios.post(
       `http://localhost:3000/api/v1/user/reset-password/${token}`,
       {
         newPassword: newPassword.value,
-        confirmPassword: confirmPassword.value
+        confirmPassword: confirmPassword.value,
       }
     )
 
     successmsg.value = res.data.message || "Password reset successful!"
 
-   
     setTimeout(() => router.push("/login"), 2000)
   } catch (err) {
     errormsg.value = err.response?.data?.message || "Reset failed."
@@ -71,3 +99,25 @@ const handleReset = async () => {
   }
 }
 </script>
+
+<style scoped>
+.signbutton {
+  background-color: #4D148C;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 200px;
+}
+
+.forms {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>
