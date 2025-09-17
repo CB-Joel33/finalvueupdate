@@ -384,17 +384,7 @@
             </p>
 
             
-            <div class="text-sm text-gray-500 mt-1 flex items-center gap-1">
-  <button 
-    @click="toggleLike(rev)" 
-    class="focus:outline-none"
-  >
-    <span :class="rev.likedByCurrentUser ? 'text-purple-700' : 'text-gray-400'">
-      👍
-    </span>
-  </button>
-  <span>{{ rev.likesCount }}</span>
-</div>
+           
           </div>
 
           
@@ -432,80 +422,160 @@
         </div>
       </div>
 
-        <div  id="costs" class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]" >
-          <h1 class="font-[800] text-[30px]">Cost and Payment Plan</h1>
+        <div
+        id="costs"
+        class="border border-slate-300 rounded-[20px] p-[15px] bg-gray-100 mb-[40px]"
+      >
+        <h1 class="font-[800] text-[30px]">Cost and Payment Plan</h1>
 
-         <div class="mt-10 flex justify-center items-center gap-10 flex-wrap">
+        <div
+          class="mt-10 flex justify-center items-center gap-10 flex-wrap"
+        >
+          <!-- Installments -->
+          <div
+            class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
+          >
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                Pay In Installments
+              </h3>
+              <p class="text-gray-600">
+                Split your payment into 2 easy installments
+              </p>
+            </div>
 
-  <!-- Card 1 -->
+            <div class="mt-4">
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">
+                    Pay 70% upfront to get started
+                  </p>
+                </li>
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">
+                    Access your courses right away
+                  </p>
+                </li>
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">
+                    Settle the remaining 30% later with ease
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              class="mt-6 px-6 py-3 rounded-xl border-2 border-[#4d148c] text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:text-purple-700 hover:shadow-lg"
+              @click="openPaymentModal(0.7)"
+            >
+              Pay now ?
+            </button>
+          </div>
+
+          <!-- Full Payment -->
+          <div
+            class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
+          >
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                Pay Full Price
+              </h3>
+              <p class="text-gray-600">
+                One-time payment for the full course
+              </p>
+            </div>
+
+            <div class="mt-4">
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">
+                    Pay 100% upfront in a single transaction
+                  </p>
+                </li>
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">
+                    Get instant access to the course
+                  </p>
+                </li>
+                <li class="flex items-center gap-3">
+                  <img
+                    src="@/assets/icons8-tick-50.png"
+                    class="w-5 h-5"
+                  />
+                  <p class="text-gray-700 font-medium">You’re all set</p>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              class="mt-6 px-6 py-3 rounded-xl border-2 border-purple-100 text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:border-[#4d148c] hover:text-purple-700 hover:shadow-lg"
+              @click="openPaymentModal(1)"
+            >
+              Pay now ?
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Modal -->
+      <div
+  v-if="showPaymentModal"
+  class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+>
   <div
-    class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
+    class="bg-white w-2/4 h-[400px] rounded-lg p-6 flex flex-col justify-between shadow-xl"
   >
-    <div>
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">Pay In Installments</h3>
-      <p class="text-gray-600">Split your payment into 2 easy installments</p>
+    <h2 class="text-2xl font-bold mb-4">
+      {{ selectedInstallment === 1 ? "Pay Full Price" : "Pay Installment" }}
+    </h2>
+
+    <p class="text-gray-700 mb-6">
+      <span v-if="selectedInstallment === 1">
+        You are about to pay <strong>₦{{ course?.price }}</strong> in full for this course.
+      </span>
+      <span v-else>
+        You are about to pay <strong>₦{{ Math.ceil(course?.price * 0.7) }}</strong> now  
+        and pay the remaining <strong>₦{{ Math.floor(course?.price * 0.3) }}</strong> later.
+      </span>
+    </p>
+
+    <div class="flex justify-end gap-4">
+      <button
+        class="px-4 py-2 rounded-lg border border-gray-400"
+        @click="showPaymentModal = false"
+      >
+        Cancel
+      </button>
+      <button
+        class="px-4 py-2 rounded-lg bg-purple-700 text-white"
+        @click="proceedPayment"
+      >
+        Proceed
+      </button>
     </div>
-
-    <div class="mt-4">
-      <ul class="space-y-3">
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Pay 70% upfront to get started</p>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Access your courses right away</p>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Settle the remaining 30% later with ease</p>
-        </li>
-      </ul>
-    </div>
-
-    <button
-      class="mt-6 px-6 py-3 rounded-xl border-2 border-[#4d148c] text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:text-purple-700 hover:shadow-lg"
-    >
-      Pay now ?
-    </button>
-  </div>
-
-  <!-- Card 2 -->
-  <div
-    class="w-[450px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col items-start justify-between p-6 transition-transform transform hover:scale-105 hover:shadow-2xl"
-  >
-    <div>
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">Pay Full Price</h3>
-      <p class="text-gray-600">One-time payment for the full course</p>
-    </div>
-
-    <div class="mt-4">
-      <ul class="space-y-3">
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Pay 100% upfront in a single transaction</p>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">Get instant access to the course</p>
-        </li>
-        <li class="flex items-center gap-3">
-          <img src="@/assets/icons8-tick-50.png" alt="Tick icon" class="w-5 h-5">
-          <p class="text-gray-700 font-medium">You’re all set</p>
-        </li>
-      </ul>
-    </div>
-
-    <button
-      class="mt-6 px-6 py-3 rounded-xl border-2 border-purple-100 text-white font-semibold bg-[#4d148c] shadow-md transition-all duration-300 hover:bg-white hover:border-[#4d148c] hover:text-purple-700 hover:shadow-lg"
-    >
-      Pay now ?
-    </button>
   </div>
 </div>
 
-
-</div>
 
       </div>
     </section>
@@ -588,6 +658,7 @@ import { useRoute } from "vue-router";
 import { ref, onMounted, nextTick, computed } from "vue";
 import axios from "axios";
 
+// Existing refs
 const course = ref(null);
 const route = useRoute();
 const courseId = route.params.id;
@@ -595,22 +666,75 @@ const jobOpportunities = ref([]);
 const loading = ref(true);
 const videoUrl = ref("https://www.youtube.com/embed/yZvFH7B6gKI?controls=1&autoplay=0");
 
-const currentUserId = ref(localStorage.getItem("userId") || null); 
-
+const currentUserId = ref(localStorage.getItem("userId") || null);
 const reviews = ref([]);
 const visibleCount = ref(3);
 const visibleReviews = computed(() =>
   reviews.value.slice(0, visibleCount.value)
 );
 
-const newReview = ref({
-  rating: 0,
-  comment: "",
-});
-
+const newReview = ref({ rating: 0, comment: "" });
 const submitting = ref(false);
 const errorMsg = ref("");
 const successMsg = ref("");
+
+// Navigation state
+const nav = ref("description");
+
+// Payment modal state
+const showPaymentModal = ref(false);
+const selectedInstallment = ref(1);
+
+
+const openPaymentModal = (installment) => {
+  selectedInstallment.value = installment;
+  showPaymentModal.value = true;
+};
+
+const proceedPayment = async () => {
+  const token = localStorage.getItem("token");
+  const email = localStorage.getItem("email"); 
+
+  if (!token || !email) {
+    alert("Missing login info. Please log in again.");
+    return;
+  }
+
+  try {
+    const installment =
+      selectedInstallment.value === 1 ? 1 : 0.7; 
+
+    const response = await axios.post(
+      `https://zacraclearningwebsite.onrender.com/payment/initiate-payment/${courseId}`,
+      {
+        email,          
+        installment,    
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // header field
+        },
+      }
+    );
+
+    console.log("Payment response:", response.data);
+
+    console.log("Sending token:", token);
+   console.log("Headers:", {
+  Authorization: `Bearer ${token}`
+});
+
+    // If backend sends Paystack URL back:
+    if (response.data?.authorization_url) {
+      window.location.href = response.data.authorization_url;
+    } else {
+      alert("Payment initiated!");
+    }
+  } catch (error) {
+    console.error("Payment error:", error);
+    alert(error?.response?.data?.message || "Failed to initiate payment");
+  }
+};
 
 
 const formatDate = (iso) => {
@@ -622,21 +746,14 @@ const formatDate = (iso) => {
   });
 };
 
-
-const showMore = () => {
-  visibleCount.value = Math.min(visibleCount.value + 10, reviews.value.length);
-};
-
+const showMore = () =>
+  (visibleCount.value = Math.min(visibleCount.value + 10, reviews.value.length));
 const showLess = () => {
   visibleCount.value = 3;
   requestAnimationFrame(() => scrollToSection("reviews"));
 };
 
-
-
 const submitReview = async () => {
-  console.log("submitReview called");
-
   errorMsg.value = "";
   successMsg.value = "";
 
@@ -660,13 +777,9 @@ const submitReview = async () => {
   submitting.value = true;
   try {
     const response = await axios.post(
-      `https://zacraclearningwebsite.onrender.com/review/${courseId}/add-review?user=${userId}`, 
+      `https://zacraclearningwebsite.onrender.com/review/${courseId}/add-review?user=${userId}`,
       { rating: newReview.value.rating, comment: newReview.value.comment },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      }
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
     const created = response?.data?.review || {
@@ -674,83 +787,34 @@ const submitReview = async () => {
       userId: { _id: currentUserId.value, name: "You" },
       rating: newReview.value.rating,
       comment: newReview.value.comment.trim(),
-      likes: [],
-      likesCount: 0,
-      likedByCurrentUser: false,
       createdAt: new Date().toISOString(),
     };
 
     reviews.value.unshift(created);
-
     newReview.value.rating = 0;
     newReview.value.comment = "";
     successMsg.value = "Review submitted!";
   } catch (e) {
-    console.error("Submit review failed:", e);
     errorMsg.value = e?.response?.data?.message || "Failed to submit review.";
   } finally {
     submitting.value = false;
   }
 };
 
-
-const nav = ref("description");
 const scrollToSection = async (id) => {
   nav.value = id;
-
   await nextTick();
   const el = document.getElementById(id);
   if (el) {
     const y = el.getBoundingClientRect().top + window.scrollY;
     const offset = 120;
-    window.scrollTo({
-      top: y - offset,
-      behavior: "smooth",
-    });
-  }
-};
-
-const toggleLike = async (rev) => {
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-
-  if (!token || !userId) {
-    alert("You need to log in to like reviews");
-    return;
-  }
-
-  
-  rev.likedByCurrentUser = !rev.likedByCurrentUser;
-  rev.likesCount += rev.likedByCurrentUser ? 1 : -1;
-
-  try {
-    const response = await axios.post(
-      `https://zacraclearningwebsite.onrender.com/review/like-review`,
-      null,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { userId, reviewId: rev._id },
-      }
-    );
-
-    console.log("Like response:", response.data);
-
-    
-    if (response.data.review) {
-      rev.likesCount = response.data.review.likes?.length || rev.likesCount;
-      rev.likedByCurrentUser = response.data.review.likes?.includes(userId) || rev.likedByCurrentUser;
-    }
-
-    
-  } catch (e) {
-    
-    rev.likedByCurrentUser = !rev.likedByCurrentUser;
-    rev.likesCount += rev.likedByCurrentUser ? 1 : -1;
-    console.error("Failed to like review:", e.response?.data || e.message);
+    window.scrollTo({ top: y - offset, behavior: "smooth" });
   }
 };
 
 
+
+// Fetch course details
 onMounted(async () => {
   try {
     const response = await axios.get(
@@ -759,19 +823,19 @@ onMounted(async () => {
     course.value = response.data.course;
     jobOpportunities.value = response.data.jobOpportunities;
 
-    reviews.value = (response.data.reviews || []).map(rev => ({
+    reviews.value = (response.data.reviews || []).map((rev) => ({
       ...rev,
-      likedByCurrentUser: rev.likes?.includes(currentUserId.value) || false,
-      likesCount: rev.likes?.length || 0,
     }));
-
   } catch (error) {
     console.error("Error fetching by Id:", error);
   } finally {
     loading.value = false;
   }
 });
+
+
 </script>
+
 
 
 

@@ -1,11 +1,13 @@
 <template>
   <div class="mainbody">
-    <div class="grid grid-cols-1 md:grid-cols-2 h-screen overflow-hidden">
+    <!-- ✅ 1 col on mobile, 2 cols on desktop -->
+    <div class="grid grid-cols-1 md:grid-cols-2 h-auto md:h-screen overflow-hidden">
       <!-- Left Section (Form) -->
       <div>
-        <div class="ml-[30%] p-[20px] mt-[150px]">
+        <!-- ✅ Mobile uses px padding, desktop keeps your original margins -->
+        <div class="px-6 py-8 md:ml-[30%] md:p-[20px] md:mt-[150px]">
           <!-- Logo -->
-          <img src="@/assets/logo.png" class="mb-6" />
+          <img src="@/assets/logo.png" class="mb-6 w-32 md:w-auto" />
 
           <!-- Error / Success Messages -->
           <div v-if="errormsg" class="text-red-500 my-2">
@@ -25,7 +27,7 @@
                 type="password"
                 v-model="newPassword"
                 placeholder="New Password"
-                class="forms"
+                class="forms w-full"
                 required
               />
 
@@ -33,12 +35,17 @@
                 type="password"
                 v-model="confirmPassword"
                 placeholder="Confirm Password"
-                class="forms"
+                class="forms w-full"
                 required
               />
 
-              <div class="mt-6 flex justify-between items-center">
-                <button class="signbutton" type="submit" :disabled="loader">
+              <!-- ✅ Buttons stack on mobile -->
+              <div class="mt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                <button
+                  class="signbutton w-full md:w-auto"
+                  type="submit"
+                  :disabled="loader"
+                >
                   <span v-if="!loader">Reset Password</span>
                   <span v-else>Processing...</span>
                 </button>
@@ -49,10 +56,10 @@
       </div>
 
       <!-- Right Section (Image) -->
-      <div>
+      <div class="hidden md:flex">
         <img
           src="@/assets/Group 36307.png"
-          class="hidden md:flex absolute top-0 right-0 h-screen w-2/5"
+          class="absolute top-0 right-0 h-screen w-2/5"
         />
       </div>
     </div>

@@ -1,82 +1,129 @@
 <template>
-
-   <div>
-    
+  <div>
+    <!-- Loading -->
     <div
       v-if="loading"
       class="flex flex-col items-center justify-center h-screen bg-white"
     >
-      
       <img
         src="@/assets/icons8-loader-80.png"
         class="h-24 w-24 object-contain animate-spin"
       />
-
-      
       <p class="mt-4 text-lg font-semibold text-gray-700">Loading...</p>
     </div>
 
     <div v-else>
-  <div class="mainbody">
-    <div style="display: grid; grid-template-columns: 0.5fr 0.5fr; height: 100vh; overflow: hidden;">
-      <div>
-        <div style="margin-left: 20%; padding: 90px;">
-          <div class="heading">
-            <img src="@/assets/logo.png" />
-            <div style="">
-              <p>
-                Already have an account?
-                <router-link to="/login" style="margin-left: 5px;color: blueviolet;">Sign in</router-link>
+      <div class="mainbody">
+        <!-- ✅ 1 col on mobile, 2 cols on desktop -->
+        <div class="grid grid-cols-1 md:grid-cols-2 h-auto md:h-screen overflow-hidden">
+          <!-- Left section -->
+          <div>
+            <!-- ✅ reduce padding on small screens, keep original desktop padding -->
+            <div class="px-6 py-8 md:ml-[20%] md:p-[90px]">
+              <div class="heading flex flex-col md:flex-row items-start md:items-center gap-4">
+                <img src="@/assets/logo.png" />
+                <div>
+                  <p>
+                    Already have an account?
+                    <router-link
+                      to="/login"
+                      class="ml-1 text-purple-600"
+                    >
+                      Sign in
+                    </router-link>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Error -->
+              <p class="text-red-600 font-bold text-center text-lg md:text-2xl mt-4">
+                {{ errormsg }}
               </p>
+
+              <!-- Title -->
+              <p class="signupbold mt-6">Sign Up</p>
+
+              <!-- Form -->
+              <div class="inputwrapper mt-4">
+                <form @submit.prevent="sign_up">
+                  <img
+                    src="@/assets/et_profile-male (1).png"
+                    class="icons"
+                    style="top: 15px"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    class="forms w-full"
+                    v-model="registerForm.full_name"
+                  />
+
+                  <img
+                    src="@/assets/iconamoon_email-thin.png"
+                    class="icons"
+                    style="top: 62px"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    class="forms w-full"
+                    v-model="registerForm.email"
+                  />
+
+                  <img
+                    src="@/assets/arcticons_password.png"
+                    class="icons"
+                    style="top: 105px"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    class="forms w-full"
+                    v-model="registerForm.password"
+                  />
+
+                  <img
+                    src="@/assets/arcticons_password.png"
+                    class="icons"
+                    style="top: 150px"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Re-enter Password"
+                    class="forms w-full"
+                    v-model="registerForm.repassword"
+                  />
+
+                  <!-- Button -->
+                  <div
+                    class="mt-10 flex flex-col gap-4 md:flex md:flex-row md:justify-between md:items-center"
+                  >
+                    <button
+                      type="submit"
+                      class="signbutton w-full md:w-auto"
+                      :disabled="loader"
+                    >
+                      {{ loader ? "Signing Up..." : "Sign Up" }}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
-     
-          <p style="color: red; font-weight: bold; text-align: center; font-size: 27px">{{ errormsg }}</p>
-
-          <p class="signupbold">
-          Sign Up
-        </p>
-
-          <div class="inputwrapper">
-            <form @submit.prevent="sign_up">
-              <img src="@/assets/et_profile-male (1).png" class="icons" style="top: 15px;" />
-              <input type="text" placeholder="Full Name" class="forms" v-model="registerForm.full_name" />
-
-              <img src="@/assets/iconamoon_email-thin.png" class="icons" style="top: 62px;" />
-              <input type="email" placeholder="Email Address" class="forms" v-model="registerForm.email" />
-
-              <img src="@/assets/arcticons_password.png" class="icons" style="top: 105px;" />
-              <input type="password" placeholder="Password" class="forms" v-model="registerForm.password" />
-
-              <img src="@/assets/arcticons_password.png" class="icons" style="top: 150px;" />
-              <input type="password" placeholder="Re-enter Password" class="forms" v-model="registerForm.repassword" />
-
-          
-              <div style="margin-top: 62px; justify-content: space-between; align-items: center; display: flex;  " class="flex-col gap-4 md:flex md:flex-row">
-             
-                <button type="submit" class="signbutton" :disabled="loader">
-                  {{ loader ? "Signing Up..." : "Sign Up" }}
-                </button>
-
-             
-              </div>
-            </form>
+          <!-- ✅ Right image: untouched on desktop, hidden on small screens -->
+          <div class="hidden md:flex" style="height: 100%;">
+            <img
+              src="@/assets/Group 36307.png"
+              style="position: absolute; top: 0; right: 0; height: 100vh; width: 40%;"
+            />
           </div>
         </div>
       </div>
-
-       <div style="height: 100%;"  class="hidden md:flex">
-
-
-        <img src="@\assets\Group 36307.png" style="position: absolute; top: 0; right: 0;height: 100vh; width: 40%;">
-      </div>
     </div>
   </div>
-   </div>
-    </div>
-
 </template>
+
 
 <script setup>
 import { ref } from "vue"
@@ -121,7 +168,8 @@ async function sign_up() {
     })
 
     console.log(data)
-    localStorage.setItem("registered email", registerForm.value.email)
+    localStorage.setItem("registered_email", registerForm.value.email)
+    localStorage.setItem("registered_name", registerForm.value.full_name)
     router.push('/otp-verification')
 
   } catch (error) {

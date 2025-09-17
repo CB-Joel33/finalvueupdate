@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        matter: ['Inter', 'sans-serif'], 
+      },
       keyframes: {
         scroll: {
           "0%": { transform: "translateX(0)" },

@@ -3,19 +3,21 @@
     <div >
     
 
-   <div class="seconddiv grid grid-cols-1 md:grid-cols-2" style="margin-top: 120px;"><!-- slightly reduced top space -->
+   <div class="seconddiv grid grid-cols-1 md:grid-cols-2" style="margin-top: 150px;"><!-- slightly reduced top space -->
   <!-- Left Content -->
   <div class="w-full">
     <div class="flex flex-col justify-center ml-[10%] mt-[2%]"><!-- reduced top margin -->
       
       <!-- Big Heading -->
-      <h2
-        class="text-[#120803] font-georgia font-semibold
-               text-3xl xs:text-4xl md:text-[2rem] xl:text-[3rem]
-               leading-snug mb-1 max-w-[15ch] lg:max-w-[17ch]"
-      >
-        Shaping Tomorrow’s Tech Leaders, One Learner at a Time.
-      </h2>
+  <h2
+  class="font-matter font-extrabold text-[2.8rem] sm:text-[3.0rem] md:text-[3.3rem] leading-tight text-[#120803] mb-2"
+>
+  Nuturing Tomorrow’s Tech Experts, One Learner at a Time.
+</h2>
+
+
+
+
 
       <!-- Sub Heading -->
       <p
@@ -40,7 +42,7 @@
 
   <!-- Right Image -->
   <div class="hidden md:flex flex-col items-center md:items-end">
-    <img src="@/assets/Frame 576.png" class="mt-3" /> <!-- reduced from mt-6 -->
+    <img src="@/assets/Frame 576.png" class="mt-10" /> <!-- reduced from mt-6 -->
   </div>
 </div>
 
@@ -57,7 +59,8 @@
       display: flex;
       justify-content: flex-start;
       gap: 20px;
-      width: 85%;
+      width: 80%;       /* 👈 shrink container */
+      margin: 0 auto;   /* 👈 center it */
       overflow-x: auto;
       white-space: nowrap;
       scrollbar-width: none; /* hide scrollbar Firefox */

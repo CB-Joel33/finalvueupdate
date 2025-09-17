@@ -1,21 +1,21 @@
 <template>
-  <div
-    style="width: 100%; height: 100px; position: fixed; top: 0; left: 0; z-index: 1000; background-color: white;"
-    class="flex flex-wrap items-center px-4"
+  <!-- Navbar Wrapper -->
+  <header
+    class="w-full h-[100px] fixed top-0 left-0 z-50 bg-white flex items-center px-8"
   >
-    <nav class="navbar w-full flex justify-between items-center">
+    <nav class="navbar w-full flex items-center">
       <!-- Logo -->
       <div>
         <router-link to="/">
-          <img src="@/assets/logo.png" alt="Logo" class="cursor-pointer" />
+          <img src="@/assets/logo.png" alt="Logo" class="cursor-pointer h-10" />
         </router-link>
       </div>
 
-      <!-- Navigation (Desktop) -->
-      <div class="hidden md:flex items-center gap-6">
+      <!-- Desktop Nav Links (centered) -->
+      <div class="hidden md:flex flex-1 justify-center items-center gap-6">
         <router-link
           to="/testimonials"
-          class="testimonials text-gray-700 hover:text-[#4D148C] font-semibold"
+          class="text-gray-700 hover:text-[#4D148C] font-semibold"
         >
           Testimonials
         </router-link>
@@ -28,13 +28,22 @@
         </router-link>
       </div>
 
-      <!-- Right side (Profile + Hamburger) -->
-      <div class="flex items-center gap-4">
-        <!-- Profile (When Logged In) -->
-        <template v-if="isLoggedIn">
+      <!-- Right Side (Desktop Only) -->
+      <div class="hidden md:flex items-center gap-4 ml-auto mr-20">
+        <!-- Show Login if not logged in -->
+        <router-link
+          v-if="!isLoggedIn"
+          to="/login"
+          class="purplebutton flex items-center gap-2 px-5 py-2.5 text-base rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
+        >
+          <span>Login</span>
+          <img src="@/assets/send.png" alt="Send Icon" class="w-4 h-4" />
+        </router-link>
+
+        <!-- Show Profile if logged in -->
+        <template v-else>
           <router-link to="/profilepage">
             <div class="relative group">
-              <!-- Profile Circle -->
               <div
                 class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer"
               >
@@ -44,41 +53,25 @@
                   class="w-8 h-8 rounded-full object-cover"
                 />
               </div>
-
-              <!-- Tooltip -->
               <div
-                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-md"
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-md px-2 py-1 shadow-md"
               >
                 User Profile
               </div>
             </div>
           </router-link>
         </template>
-
-        <!-- Login Button -->
-        <router-link
-          v-else
-          to="/login"
-          class="purplebutton flex items-center gap-2 px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-5 md:py-2.5 md:text-base lg:px-6 lg:py-3 rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
-        >
-          <span>Login</span>
-          <img
-            src="@/assets/send.png"
-            alt="Send Icon"
-            class="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4"
-          />
-        </router-link>
-
-        <!-- Hamburger (Mobile only) -->
-        <button
-          @click="menuOpen = !menuOpen"
-          class="md:hidden flex flex-col gap-1"
-        >
-          <span class="w-6 h-0.5 bg-gray-700"></span>
-          <span class="w-6 h-0.5 bg-gray-700"></span>
-          <span class="w-6 h-0.5 bg-gray-700"></span>
-        </button>
       </div>
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        @click="menuOpen = !menuOpen"
+        class="md:hidden flex flex-col gap-1"
+      >
+        <span class="w-6 h-0.5 bg-gray-700"></span>
+        <span class="w-6 h-0.5 bg-gray-700"></span>
+        <span class="w-6 h-0.5 bg-gray-700"></span>
+      </button>
     </nav>
 
     <!-- Mobile Menu -->
@@ -101,34 +94,58 @@
       >
         Contact Us
       </router-link>
+
+      <!-- Mobile Login OR Profile -->
+      <template v-if="isLoggedIn">
+        <router-link
+          to="/profilepage"
+          class="flex items-center gap-2 px-2 py-2 text-sm rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold"
+          @click="menuOpen = false"
+        >
+          <div class="w-8 h-8 rounded-full overflow-hidden">
+            <img
+              :src="userImage || defaultProfile"
+              alt="Profile"
+              class="w-8 h-8 object-cover"
+            />
+          </div>
+          <span>Profile</span>
+        </router-link>
+      </template>
+
+      <template v-else>
+        <router-link
+          to="/login"
+          class="purplebutton flex items-center gap-2 px-2 py-2 text-sm rounded-lg bg-[#4D148C] text-white hover:bg-[#3a0f85] font-semibold"
+          @click="menuOpen = false"
+        >
+          <span>Login</span>
+          <img src="@/assets/send.png" alt="Send Icon" class="w-4 h-4" />
+        </router-link>
+      </template>
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import AboutDropdown from "./aboutDropdown.vue";
-
-// import default profile image properly
 import defaultProfile from "@/assets/icons8-user-32.png";
 
 const router = useRouter();
-
-// Login state
+const menuOpen = ref(false);
 const isLoggedIn = ref(false);
-const userImage = ref(""); // stores user profile image URL
+const userImage = ref("");
 
 onMounted(() => {
   const token = localStorage.getItem("token");
-  const profilePic = localStorage.getItem("profilePic"); // optional custom pic
+  const profilePic = localStorage.getItem("profilePic");
   if (token) {
     isLoggedIn.value = true;
-    userImage.value = profilePic || ""; // fallback handled in template
+    userImage.value = profilePic || "";
   }
 });
-
-const menuOpen = ref(false);
 </script>
 
 <style scoped>
