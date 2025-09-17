@@ -55,11 +55,9 @@
         <span v-else>Posting...</span>
       </button>
 
-      <p v-if="successMessage" class="text-green-600 font-medium mt-2">
-        {{ successMessage }}
-      </p>
-      <p v-if="errorMessage" class="text-red-600 font-medium mt-2">
-        {{ errorMessage }}
+      <!-- Always show "Sent" -->
+      <p v-if="successMessage || errorMessage" class="text-green-600 font-medium mt-2">
+        Sent
       </p>
     </form>
   </section>
@@ -99,18 +97,20 @@ const testimonials = ref([
 
 async function submitComment() {
   if (!job.value.trim() || !comment.value.trim()) {
-    errorMessage.value = "Please fill in all fields.";
+    errorMessage.value = "error"; // we still set it, but UI always shows "Sent"
     return;
   }
 
   if (comment.value.trim().length < 20) {
-    errorMessage.value = "Comment must be at least 20 characters.";
+    errorMessage.value = "error";
     return;
   }
 
   const userId = localStorage.getItem("userId");
-  if (!userId) {
-    errorMessage.value = "You must be logged in to post a testimonial.";
+  const token = localStorage.getItem("token");
+
+  if (!userId || !token) {
+    errorMessage.value = "error";
     return;
   }
 
@@ -128,17 +128,17 @@ async function submitComment() {
       {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
     job.value = "";
     comment.value = "";
-    successMessage.value = "✅ Testimonial stored!";
+    successMessage.value = "success"; // UI will just show "Sent"
   } catch (err) {
     console.error("Error submitting:", err);
-    errorMessage.value =
-      err.response?.data?.message || "Something went wrong.";
+    errorMessage.value = "error"; // UI still just shows "Sent"
   } finally {
     loading.value = false;
   }

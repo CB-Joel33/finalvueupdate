@@ -63,12 +63,37 @@
               <div>
                 <p class="font-medium">{{ t.course?.title || "Unknown Course" }}</p>
                 <p class="text-sm text-gray-500">Ref: {{ t.reference }}</p>
-                <p class="text-sm"
-                   :class="t.status === 'completed' ? 'text-green-600' : 'text-yellow-600'">
+
+                <!-- Status -->
+                <p
+                  class="text-sm"
+                  :class="{
+                    'text-green-600': t.status === 'completed',
+                    'text-orange-600': t.status === 'pending',
+                    'text-red-600': t.status === 'failed'
+                  }"
+                >
                   {{ t.status }}
                 </p>
               </div>
-              <span class="font-semibold">₦{{ t.price.toLocaleString() }}</span>
+
+              <!-- Amount / Balance Display -->
+              <div class="text-right">
+                <!-- Completed: Amount Paid -->
+                <span v-if="t.status === 'completed'" class="font-semibold text-green-600">
+                  Amount Paid: ₦{{ t.price.toLocaleString() }}
+                </span>
+
+                <!-- Pending: Show Remainder -->
+                <span v-else-if="t.status === 'pending'" class="font-semibold text-orange-600">
+  Pending: ₦{{ Math.floor(t.price / 0.7).toLocaleString() }}
+</span>
+
+                <!-- Failed -->
+                <span v-else class="font-semibold text-red-600">
+                  Payment Failed
+                </span>
+              </div>
             </li>
           </ul>
 
@@ -193,6 +218,17 @@ async function fetchBilling() {
   } catch (err) {
     console.error("Error fetching billing:", err.response?.data || err.message)
   }
+}
+
+// ---------------- Helper: Calculate remainder ----------------
+function getRemainder(t) {
+  if (t.remaining) {
+    return t.remaining.toLocaleString()
+  }
+  const coursePrice = t.course?.price || 0
+  const paid = t.price || 0
+  const remainder = coursePrice - paid
+  return remainder > 0 ? remainder.toLocaleString() : "0"
 }
 
 // ---------------- Run on mounted ----------------
